@@ -1,4 +1,4 @@
-# Team Name
+# CompileAndConquer
 
 Project description (~1 paragraph)
 

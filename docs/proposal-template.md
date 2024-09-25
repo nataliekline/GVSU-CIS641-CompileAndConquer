@@ -1,6 +1,6 @@
-Team name:
+Team name: CompileAndConquer
 
-Team members:
+Team members: Natalie Kline & Marcos Diaz
 
 # Introduction
 

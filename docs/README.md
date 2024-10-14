@@ -11,3 +11,8 @@ AppXpert is a cross-functional mobile app designed to simplify the job search ex
 - [October 14th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-14.md)
 - [October 7th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-07.md)
 - [September 27th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-09-27.md)
+
+## Whiteboard Sketches
+- [Gantt Chart Sketch](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/images/2024-10-14%20Gantt%20Chart%20Sketch.jpg)
+- [October 14th Dicussion](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/images/2024-10-14%20Discussion.jpg)
+- [October 7th Discussion](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/images/2024-10-07%20Discussion.jpg)

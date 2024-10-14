@@ -9,7 +9,7 @@ Time: 3:00 PM
 Discussion points: 
 
 * Reviewed our project proposal and discussed deliverable options for the midterm presentation
-* Created quick mockups of the app's intended screens on a whitebaord
+* Created quick mockups of the app's intended screens on a whiteboard
 * Discussed ways to make the app more dynamic, ensuring the user benefits even if the process feels tedious
 
 Goals for next week (include responsibilities):

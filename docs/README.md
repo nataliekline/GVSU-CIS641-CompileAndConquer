@@ -5,6 +5,7 @@ AppXpert is a cross-functional mobile app designed to simplify the job search ex
 
 ## Project Documents
 - [Project Proposal](proposal.md)
+- [Software Requirements Specification](software_requirements_specification.md)
 
 ## Project Meetings
 - [October 14th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-14.md)

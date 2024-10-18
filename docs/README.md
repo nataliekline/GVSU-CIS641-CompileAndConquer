@@ -6,6 +6,11 @@ AppXpert is a cross-functional mobile app designed to simplify the job search ex
 ## Project Documents
 - [Project Proposal](proposal.md)
 - [Software Requirements Specification](software_requirements_specification.md)
+- [System Request](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/System%20Request.pdf)
+- [Use Case and Activity Diagrams](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/UseCaseActivityDiagrams.pdf)
+- [User CRC Card](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/CRC%20Cards.pdf)
+- [Class Diagram](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/ClassDiagram.png)
+- [Object Diagram](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/ObjectDiagram.png)
 
 ## Project Meetings
 - [October 14th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-14.md)

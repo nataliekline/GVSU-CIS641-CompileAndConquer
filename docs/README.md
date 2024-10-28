@@ -15,6 +15,7 @@ AppXpert is a cross-functional mobile app designed to simplify the job search ex
 - [Figma Screens](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/figma-screens/docs/appxpert_figma_screens.pdf)
 
 ## Project Meetings
+- [October 28th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-28.md)
 - [October 14th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-14.md)
 - [October 7th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-10-07.md)
 - [September 27th, 2024](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/meetings/GVSU-CIS641-CompileAndConquer-2024-09-27.md)

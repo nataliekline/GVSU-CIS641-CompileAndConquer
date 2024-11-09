@@ -1,10 +1,13 @@
-import AppGradient from '@/components/AppGradient';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Button, TextInput, HelperText } from 'react-native-paper';
-import logoStyles from '../styles/logo'
+import { Button, HelperText, TextInput } from 'react-native-paper';
 import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
+import { auth } from '@/config/fb-config';
+import logoStyles from '../styles/logo'
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 type Props = StackScreenProps<RootStackParamList>;
 
@@ -30,6 +33,15 @@ const LoginScreen = ({ navigation }: Props) => {
     const handleSignup = () => {
         navigation.navigate('SignUp');
     };
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("User Logged");
+      })
+      .catch((error) => {
+          alert(error.message);
+      }
+    );
     
     return (
         <AppGradient>
@@ -81,7 +93,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 </TouchableOpacity>
             </View>
         </AppGradient>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

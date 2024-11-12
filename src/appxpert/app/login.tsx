@@ -1,10 +1,13 @@
-import AppGradient from '@/components/AppGradient';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Button, TextInput, HelperText } from 'react-native-paper';
-import logoStyles from '../styles/logo'
+import { Button, HelperText, TextInput } from 'react-native-paper';
 import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
+import { auth } from '@/config/fb-config';
+import logoStyles from '../styles/logo'
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 type Props = StackScreenProps<RootStackParamList>;
 
@@ -25,8 +28,17 @@ const LoginScreen = ({ navigation }: Props) => {
         if (!password) {
           setPasswordError(true);
         }
-    };
-
+        if (!emailError && !passwordError) {
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    console.log("User Logged for email " + email);
+                })
+                .catch((error) => {
+                    alert(error.message);
+                }
+            );
+        }
+    }
     const handleSignup = () => {
         navigation.navigate('SignUp');
     };
@@ -48,6 +60,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 onChangeText={setEmail}
                 theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                 label="Enter your email"
+                autoCapitalize='none'
                 error={emailError}
                 style={styles.input}
             />
@@ -59,6 +72,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 onChangeText={setPassword}
                 theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                 label="Enter your password"
+                secureTextEntry={true}
                 error={passwordError}
                 style={styles.input}
             />
@@ -81,7 +95,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 </TouchableOpacity>
             </View>
         </AppGradient>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

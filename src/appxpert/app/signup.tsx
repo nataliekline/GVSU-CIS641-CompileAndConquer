@@ -1,10 +1,13 @@
-import AppGradient from '@/components/AppGradient';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Button, TextInput, HelperText } from 'react-native-paper';
-import logoStyles from '../styles/logo'
+import { Button, HelperText, TextInput } from 'react-native-paper';
 import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+
+import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
+import { auth } from '@/config/fb-config';
+import logoStyles from '../styles/logo'
 
 type Props = StackScreenProps<RootStackParamList>;
 
@@ -15,6 +18,7 @@ const SignUpScreen = ({ navigation }: Props) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('')
 
   const handleLogin = () => {
     navigation.navigate('Login');
@@ -28,13 +32,26 @@ const SignUpScreen = ({ navigation }: Props) => {
     if (!email) {
       setEmailError(true);
     }
-
     if (!password) {
       setPasswordError(true);
     }
-
     if (!confirmPassword) {
+      setPasswordErrorMessage("Password is required again")
       setConfirmPasswordError(true);
+    }
+    if (password != confirmPassword) {
+      setPasswordErrorMessage("The Passwords don't match")
+      setConfirmPasswordError(true);
+    }
+    
+    if (!emailError && !passwordError && !confirmPasswordError) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          console.log("User created for email " + email);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }
 
@@ -53,6 +70,8 @@ const SignUpScreen = ({ navigation }: Props) => {
           mode='outlined'
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Enter your email"
+          autoCapitalize='none'
+          onChangeText={setEmail}
           style={styles.input}
         />
         {emailError && <HelperText type="error">Email is required</HelperText>}
@@ -61,6 +80,8 @@ const SignUpScreen = ({ navigation }: Props) => {
           mode='outlined'
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Enter your password"
+          onChangeText={setPassword}
+          secureTextEntry={true}
           style={styles.input}
         />
         {passwordError && <HelperText type="error">Password is required</HelperText>}
@@ -69,9 +90,11 @@ const SignUpScreen = ({ navigation }: Props) => {
           mode='outlined'
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Re-enter your password"
+          onChangeText={setConfirmPassword}
+          secureTextEntry={true}
           style={styles.input}
         />
-        {confirmPasswordError && <HelperText type="error">Password is required again</HelperText>}
+        {confirmPasswordError && <HelperText type="error">{passwordErrorMessage}</HelperText>}
 
       </View>
       <View style={styles.buttonContainer}>

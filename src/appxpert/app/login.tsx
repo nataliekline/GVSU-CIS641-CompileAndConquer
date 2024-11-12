@@ -28,20 +28,20 @@ const LoginScreen = ({ navigation }: Props) => {
         if (!password) {
           setPasswordError(true);
         }
-    };
-
+        if (!emailError && !passwordError) {
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    console.log("User Logged for email " + email);
+                })
+                .catch((error) => {
+                    alert(error.message);
+                }
+            );
+        }
+    }
     const handleSignup = () => {
         navigation.navigate('SignUp');
     };
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("User Logged");
-      })
-      .catch((error) => {
-          alert(error.message);
-      }
-    );
     
     return (
         <AppGradient>
@@ -60,6 +60,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 onChangeText={setEmail}
                 theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                 label="Enter your email"
+                autoCapitalize='none'
                 error={emailError}
                 style={styles.input}
             />
@@ -71,6 +72,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 onChangeText={setPassword}
                 theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                 label="Enter your password"
+                secureTextEntry={true}
                 error={passwordError}
                 style={styles.input}
             />

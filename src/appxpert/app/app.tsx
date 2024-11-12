@@ -3,7 +3,8 @@ import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import LoginScreen from "./login";
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SignUpScreen from './SignUpScreen';
+import SignUpScreen from './signup';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
@@ -26,19 +27,17 @@ export default function App() {
   return (
     <SafeAreaProvider>
         <PaperProvider theme={theme}>
-            <Stack.Navigator initialRouteName="Login">
-                
-            <Stack.Screen 
-                name="Login" 
-                component={LoginScreen} 
-                options={{ headerShown : false }} 
-            />
-            <Stack.Screen 
-                name="SignUp" 
-                component={SignUpScreen} 
-                options={{ title: 'Sign Up' }} 
-            />
-            </Stack.Navigator>
+              <Stack.Navigator initialRouteName="SignUp" screenOptions={{headerShown: false}}>
+              
+              <Stack.Screen
+                  name="Login"
+                  component={LoginScreen}
+              />
+              <Stack.Screen
+                  name="SignUp"
+                  component={SignUpScreen}
+              />
+              </Stack.Navigator>
         </PaperProvider>
     </SafeAreaProvider>
   );

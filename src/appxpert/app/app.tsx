@@ -1,16 +1,15 @@
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
 
-import BackgroundScreen from './background';
 import LoginScreen from "./login";
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SignUpScreen from './SignUpScreen';
+import SignUpScreen from './signup';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
-  Background: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -28,24 +27,17 @@ export default function App() {
   return (
     <SafeAreaProvider>
         <PaperProvider theme={theme}>
-            <Stack.Navigator initialRouteName="Background">
-                
-            <Stack.Screen 
-                name="Login" 
-                component={LoginScreen} 
-                options={{ headerShown : false }} 
-            />
-            <Stack.Screen 
-                name="SignUp" 
-                component={SignUpScreen} 
-                options={{ title: 'Sign Up' }} 
-            />
-            <Stack.Screen 
-                name="Background" 
-                component={BackgroundScreen} 
-                options={{ headerShown : false }} 
-            />
-            </Stack.Navigator>
+              <Stack.Navigator initialRouteName="SignUp" screenOptions={{headerShown: false}}>
+              
+              <Stack.Screen
+                  name="Login"
+                  component={LoginScreen}
+              />
+              <Stack.Screen
+                  name="SignUp"
+                  component={SignUpScreen}
+              />
+              </Stack.Navigator>
         </PaperProvider>
     </SafeAreaProvider>
   );

@@ -1,11 +1,14 @@
+import AppGradient from '@/components/AppGradient';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView, Text } from 'react-native';
 
 const BackgroundScreen = () => {
   return (
-    <LinearGradient
-    colors={['#7AC2FD', '#155080']}
-    style={{flex: 1}}
-    />
+    <AppGradient>
+        <SafeAreaView>
+            <Text style={{paddingTop: 40}}>Finally Working Woohoo!</Text>
+        </SafeAreaView>
+    </AppGradient>
   )
 };
 

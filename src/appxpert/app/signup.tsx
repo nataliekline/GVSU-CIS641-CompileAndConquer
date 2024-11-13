@@ -7,7 +7,7 @@ import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
 import { auth } from '@/config/fb-config';
-import logoStyles from '../styles/logo'
+import logoStyles from '../styles/logo';
 
 type Props = StackScreenProps<RootStackParamList>;
 

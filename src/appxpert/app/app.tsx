@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Applications from './home/applications';
 import Calendar from './home/calendar';
 import Settings from './home/settings';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -30,16 +31,65 @@ const theme = {
     },
   };
 
+type TabBarIconProps = {
+  focused: boolean;
+  color: string;
+  size: number;
+};
+
+function getTabBarIcon(focused: boolean, color: string, name: string): JSX.Element {
+  const iconMap: { [key: string]: string } = {
+    Dashboard: 'analytics',
+    Applications: 'documents',
+    Calendar: 'calendar',
+    Settings: 'settings',
+  };
+
+  const iconName = iconMap[name];
+  return (
+    <Ionicons
+      name={focused ? `${iconName}-sharp` : `${iconName}-outline`}
+      size={24}
+      color={color}
+    />
+  );
+}
+
 function DashboardTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
-      <Tab.Screen name="Applications" component={Applications} options={{ headerShown: false }} />
-      <Tab.Screen name="Calendar" component={Calendar} options={{ headerShown: false }} />
-      <Tab.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Dashboard"),
+        }}
+      />
+      <Tab.Screen
+        name="Applications"
+        component={Applications}
+        options={{
+          tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Applications"),
+        }}
+      />
+      <Tab.Screen
+        name="Calendar"
+        component={Calendar}
+        options={{
+          tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Calendar"),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Settings"),
+        }}
+      />
     </Tab.Navigator>
   );
 }
+  
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)

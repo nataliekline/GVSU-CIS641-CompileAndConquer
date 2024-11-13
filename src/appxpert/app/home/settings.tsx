@@ -1,18 +1,23 @@
-import { Text, View, StyleSheet } from "react-native"
+import { Text, View, StyleSheet } from "react-native";
+import AppGradient from '@/components/AppGradient';
+import logoStyles from '../../styles/logo';
 
 const Settings = () => {
     return (
-        <View style={styles.container}>
-            <Text>This is the settings screen</Text>
-        </View>
+        <AppGradient>
+            <View style={styles.logoContainer}>
+                <Text style={logoStyles.appText}>App</Text>
+                <Text style={logoStyles.xpertText}>Xpert</Text>
+            </View>
+        </AppGradient>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    logoContainer: {
+        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: 32,
     },
 });
 

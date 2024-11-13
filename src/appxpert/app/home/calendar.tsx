@@ -1,18 +1,22 @@
-import { Text, View, StyleSheet } from "react-native"
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
+import logoStyles from '../../styles/logo';
 
 const Calendar = () => {
     return (
-        <View style={styles.container}>
-            <Text>This is the calendar screen</Text>
-        </View>
+        <SafeAreaView>
+            <View style={styles.logoContainer}>
+                <Text style={{...logoStyles.appText, color: '#7AC2FD'}}>App</Text>
+                <Text style={logoStyles.xpertText}>Xpert</Text>
+            </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    logoContainer: {
+        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: 32,
     },
 });
 

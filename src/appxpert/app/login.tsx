@@ -1,11 +1,13 @@
 import { Button, HelperText, TextInput } from 'react-native-paper';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { AccountContext } from '@/context/AccountContext';
 import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
 import { auth } from '@/config/fb-config';
+import { getAccount } from '@/persistence/account-store';
 import logoStyles from '../styles/logo'
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -17,6 +19,8 @@ const LoginScreen = ({ navigation }: Props) => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
+    const accountContext = useContext(AccountContext);
+
     const handleLogin = () => {
         setEmailError(false);
         setPasswordError(false);
@@ -24,14 +28,16 @@ const LoginScreen = ({ navigation }: Props) => {
         if (!email) {
           setEmailError(true);
         }
-    
         if (!password) {
           setPasswordError(true);
         }
         if (!emailError && !passwordError) {
             signInWithEmailAndPassword(auth, email, password)
                 .then(() => {
-                    console.log("User Logged for email " + email);
+                    getAccount(email, (accountResponse) => {
+                        console.log("Log succesfull for email", email);
+                        accountContext.setAccountState(accountResponse);
+                    })
                 })
                 .catch((error) => {
                     alert(error.message);

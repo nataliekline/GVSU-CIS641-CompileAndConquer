@@ -1,8 +1,9 @@
-import { AccountContext, AccountType, initialAccountState } from "@/context/AccountContext";
+import { AccountContext, initialAccountState } from "@/context/AccountContext";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import { deleteAccount, setupListenerOverAccount } from "@/persistence/account-store";
+import { deleteAccount, setupListenerOverAccount } from "@/persistence/AccountStore";
 import { useContext, useEffect, useState } from "react";
 
+import { Account } from "@/models/Account";
 import AppGradient from '@/components/AppGradient';
 import IconButton from "@/components/IconWithButton";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,7 +19,7 @@ const Settings: React.FC<SettingsScreenProps> = ({navigation}) => {
     const [name, setName] = useState(accountContext.account.name);
 
     useEffect(() => {
-        setupListenerOverAccount(accountContext.account.email, (account: AccountType) => {
+        setupListenerOverAccount(accountContext.account.email, (account:Account) => {
             if (account) {
                 setName(account.name);
             }

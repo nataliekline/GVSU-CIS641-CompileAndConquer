@@ -3,12 +3,13 @@ import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
+import { Account } from '@/models/Account';
 import { AccountContext } from '@/context/AccountContext';
 import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
 import { auth } from '@/config/fb-config';
-import { createNewAccount } from '../persistence/account-store'
+import { createNewAccount } from '../persistence/AccountStore'
 import logoStyles from '../styles/logo';
 
 type Props = StackScreenProps<RootStackParamList>;
@@ -54,7 +55,7 @@ const SignUpScreen = ({ navigation }: Props) => {
     }
     
     if (!emailError && !passwordError && !confirmPasswordError && !nameError) {
-      const accountObject = {
+      const accountObject: Account = {
         name: name,
         email: email
       }

@@ -7,7 +7,7 @@ import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
 import { auth } from '@/config/fb-config';
-import { getAccount } from '@/persistence/account-store';
+import { getAccount } from '@/persistence/AccountStore';
 import logoStyles from '../styles/logo'
 import { signInWithEmailAndPassword } from "firebase/auth";
 

@@ -1,9 +1,10 @@
-import { AccountContext, AccountType } from "@/context/AccountContext";
 import { Button, TextInput } from "react-native-paper";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { setupListenerOverAccount, updateAccount } from "@/persistence/account-store";
+import { setupListenerOverAccount, updateAccount } from "@/persistence/AccountStore";
 import { useContext, useEffect, useState } from "react";
 
+import { Account } from "@/models/Account";
+import { AccountContext } from "@/context/AccountContext";
 import AppGradient from '@/components/AppGradient';
 
 const PersonalInformation: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -19,7 +20,7 @@ const PersonalInformation: React.FC<{ navigation: any }> = ({ navigation }) => {
     };
 
     useEffect(() => {
-        setupListenerOverAccount(accountContext.account.email, (account: AccountType) => {
+        setupListenerOverAccount(accountContext.account.email, (account: Account) => {
             setModifiableAccount(account);
         });
     }, []);

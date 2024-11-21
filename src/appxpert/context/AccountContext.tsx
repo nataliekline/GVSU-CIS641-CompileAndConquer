@@ -1,23 +1,19 @@
 import React, { ReactNode, createContext, useState } from "react";
 
+import { Account } from "@/models/Account";
+
 interface AccountContextType {
-    account: AccountType;
-    setAccountState: (vals: Partial<typeof initialAccountState>) => void;
+    account: Account;
+    setAccountState: (vals: Account) => void;
 }
 
-export const initialAccountState: AccountType = {
+export const initialAccountState: Account = {
     name: "",
     email: "",
     age: "",
     profession: ""
 };
 
-export interface AccountType {
-    name: string;
-    email: string;
-    age: string;
-    profession: string;
-}
 
 export const AccountContext = createContext<AccountContextType>({
     account: initialAccountState,
@@ -31,7 +27,7 @@ interface AccountContextProviderProps {
 export const AccountContextProvider: React.FC<AccountContextProviderProps> = ({ children }) => {
     const [accountState, setAccountState] = useState(initialAccountState);
 
-    const updateAccountStateObject = (vals: Partial<typeof initialAccountState>) => {
+    const updateAccountStateObject = (vals: Account) => {
         setAccountState((prevState) => ({
             ...prevState,
             ...vals,

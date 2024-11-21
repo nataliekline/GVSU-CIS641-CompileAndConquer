@@ -1,7 +1,8 @@
-import { AccountType, initialAccountState } from "@/context/AccountContext";
 import { DocumentData, addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore"
 
+import { Account } from "@/models/Account";
 import { db } from '../config/fb-config'
+import { initialAccountState } from "@/context/AccountContext";
 
 const ACCOUNT_PATH = "accounts";
 
@@ -53,9 +54,9 @@ export function getAccount(email: string, callback: (response: any) => void) {
     });
 }
 
-export function setupListenerOverAccount(email: string , updateFunc: (account : AccountType) => void){
+export function setupListenerOverAccount(email: string , updateFunc: (account : Account) => void){
     const unsub = onSnapshot(doc(db, ACCOUNT_PATH, email), (doc) => {
-        const acccountResponse = doc.data() as AccountType
+        const acccountResponse = doc.data() as Account
         updateFunc(acccountResponse);
     }, (error) => {
         console.error(error);

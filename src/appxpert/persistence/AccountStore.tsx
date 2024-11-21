@@ -2,7 +2,6 @@ import { DocumentData, addDoc, collection, deleteDoc, doc, getDoc, getDocs, limi
 
 import { Account } from "@/models/Account";
 import { db } from '../config/fb-config'
-import { initialAccountState } from "@/context/AccountContext";
 
 const ACCOUNT_PATH = "accounts";
 

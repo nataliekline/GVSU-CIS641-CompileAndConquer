@@ -1,6 +1,7 @@
 import { AccountContext, initialAccountState } from "@/context/AccountContext";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { deleteAccount, setupListenerOverAccount } from "@/persistence/AccountStore";
+import { deleteUser, signOut } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 
 import { Account } from "@/models/Account";
@@ -11,7 +12,6 @@ import { RootStackParamList } from "../app";
 import { StackScreenProps } from '@react-navigation/stack';
 import { auth } from '@/config/fb-config';
 import logoStyles from '../../styles/logo';
-import { signOut } from "firebase/auth";
 
 type SettingsScreenProps = StackScreenProps<RootStackParamList, 'SettingsHome'>;
 const Settings: React.FC<SettingsScreenProps> = ({navigation}) => {
@@ -52,8 +52,13 @@ const Settings: React.FC<SettingsScreenProps> = ({navigation}) => {
                 text: "Yes",
                 onPress: () => {
                     deleteAccount(accountContext.account.email, () => {
-                        console.log("Data deleted for this account")
-                        onLogOut();
+                        if (auth.currentUser) {
+                            deleteUser(auth.currentUser).then(() => {
+                                console.log("Data deleted for this account")
+                            }).catch((error) => {
+                                console.error("Error deleting account", error);
+                            })
+                        }
                     })
                 },
               },
@@ -73,6 +78,7 @@ const Settings: React.FC<SettingsScreenProps> = ({navigation}) => {
             console.error(error);
             // An error happened.
           });
+
     }
 
     return (

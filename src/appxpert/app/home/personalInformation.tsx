@@ -26,11 +26,17 @@ const PersonalInformation: React.FC<{ navigation: any }> = ({ navigation }) => {
     }, []);
 
     function handleSave() {
-        updateAccount(accountContext.account.email, {
-            name: modifiableAccount.name,
-            age: modifiableAccount.age,
-            profession: modifiableAccount.profession
-        }, () => {
+        const modifiedAccount = accountContext.account;
+        if (modifiableAccount.name != modifiedAccount.name) {
+            modifiedAccount.name = modifiableAccount.name;
+        }
+        if (modifiableAccount.age != null && modifiableAccount.age != modifiedAccount.age) {
+            modifiedAccount.age = modifiableAccount.age;
+        }
+        if (modifiableAccount.profession != null && modifiableAccount.profession != modifiedAccount.profession) {
+            modifiedAccount.profession = modifiableAccount.profession;
+        }
+        updateAccount(accountContext.account.email, modifiedAccount, () => {
             console.log("Account Saved");
         });
         navigation.goBack();

@@ -1,8 +1,13 @@
-import { Text, View, StyleSheet, SafeAreaView } from "react-native";
-import logoStyles from '../../styles/logo';
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+
+import { AccountContext } from "@/context/AccountContext";
 import { LinearGradient } from 'expo-linear-gradient';
+import logoStyles from '../../styles/logo';
+import { useContext } from "react";
 
 const Dashboard = () => {
+    const accountContext = useContext(AccountContext);
+
     return (
         <SafeAreaView>
             <View style={styles.logoContainer}>
@@ -10,7 +15,7 @@ const Dashboard = () => {
                 <Text style={logoStyles.xpertText}>Xpert</Text>
             </View>
             <View style={styles.bodyContainer}>
-                <Text style={styles.welcomeText}>Hi John!</Text>
+                <Text style={styles.welcomeText}>Hi {accountContext.account.name}!</Text>
 
                 <View style={styles.sentenceContainer}>
                     <View style={{flexDirection: 'row'}}>

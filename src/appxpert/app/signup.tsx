@@ -1,20 +1,25 @@
 import { Button, HelperText, TextInput } from 'react-native-paper';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
+import { Account } from '@/models/Account';
+import { AccountContext } from '@/context/AccountContext';
 import AppGradient from '@/components/AppGradient';
 import { RootStackParamList } from './app';
 import { StackScreenProps } from '@react-navigation/stack';
 import { auth } from '@/config/fb-config';
+import { createNewAccount } from '../persistence/AccountStore'
 import logoStyles from '../styles/logo';
 
 type Props = StackScreenProps<RootStackParamList>;
 
 const SignUpScreen = ({ navigation }: Props) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
@@ -24,34 +29,57 @@ const SignUpScreen = ({ navigation }: Props) => {
     navigation.navigate('Login');
   };
 
+  const accountContext = useContext(AccountContext);
+
+  const handleConfirmPasswordChange = (text: string) => {
+    setConfirmPassword(text);
+    setPasswordError(false);
+  }
+
   const handleSignup = () => {
     setEmailError(false);
     setPasswordError(false);
     setConfirmPasswordError(false);
-
+    setNameError(false);
+    if (!name) {
+      setNameError(true);
+      return;
+    }
     if (!email) {
       setEmailError(true);
+      return;
     }
     if (!password) {
       setPasswordError(true);
+      return;
     }
     if (!confirmPassword) {
       setPasswordErrorMessage("Password is required again")
       setConfirmPasswordError(true);
+      return;
     }
     if (password != confirmPassword) {
       setPasswordErrorMessage("The Passwords don't match")
       setConfirmPasswordError(true);
+      return;
     }
     
-    if (!emailError && !passwordError && !confirmPasswordError) {
-      createUserWithEmailAndPassword(auth, email, password)
+    if (!emailError && !passwordError && !confirmPasswordError && !nameError) {
+      const accountObject: Account = {
+        name: name,
+        email: email
+      }
+      createNewAccount(accountObject, (response: any) => {
+        console.log("Account created", response)
+        createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           console.log("User created for email " + email);
+          accountContext.setAccountState(accountObject);
         })
         .catch((error) => {
           console.error(error);
         });
+      });
     }
   }
 
@@ -69,9 +97,20 @@ const SignUpScreen = ({ navigation }: Props) => {
         <TextInput
           mode='outlined'
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
+          label="Enter your name"
+          autoCapitalize='none'
+          onChangeText={setName}
+          value={name}
+          style={styles.input}
+        />
+        {nameError && <HelperText type="error">Name is required</HelperText>}
+        <TextInput
+          mode='outlined'
+          theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Enter your email"
           autoCapitalize='none'
           onChangeText={setEmail}
+          value={email}
           style={styles.input}
         />
         {emailError && <HelperText type="error">Email is required</HelperText>}
@@ -81,6 +120,7 @@ const SignUpScreen = ({ navigation }: Props) => {
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Enter your password"
           onChangeText={setPassword}
+          value={password}
           secureTextEntry={true}
           style={styles.input}
         />
@@ -90,7 +130,8 @@ const SignUpScreen = ({ navigation }: Props) => {
           mode='outlined'
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Re-enter your password"
-          onChangeText={setConfirmPassword}
+          onChangeText={handleConfirmPasswordChange}
+          value= {confirmPassword}
           secureTextEntry={true}
           style={styles.input}
         />
@@ -124,7 +165,7 @@ const styles = StyleSheet.create({
   },
   introContainer: {
       alignItems: 'center',
-      paddingVertical: 48,
+      paddingVertical: 40,
   },
   signupText: {
       fontSize: 32,
@@ -139,7 +180,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
       paddingHorizontal: 32,
-      paddingTop: 32,
   },
   input: {
       marginBottom: 20,
@@ -159,7 +199,7 @@ const styles = StyleSheet.create({
   },
   helpContainer: {
       alignItems: 'center',
-      paddingTop: 60,
+      paddingTop: 32,
   },
   helpText: {
       fontSize: 20,

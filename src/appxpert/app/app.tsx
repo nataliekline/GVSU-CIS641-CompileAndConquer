@@ -1,22 +1,28 @@
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import React, { useState } from 'react';
-import LoginScreen from "./login";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SignUpScreen from './signup';
-import { auth } from '@/config/fb-config';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Dashboard from './home/dashboard';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { AccountContextProvider } from '@/context/AccountContext';
 import Applications from './home/applications';
 import Calendar from './home/calendar';
-import Settings from './home/settings';
+import Dashboard from './home/dashboard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LoginScreen from "./login";
+import PersonalInformation from './home/personalInformation';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Settings from './home/settings';
+import SignUpScreen from './signup';
+import { auth } from '@/config/fb-config';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   Home: undefined;
   Dashboard: undefined;
   Login: undefined;
   SignUp: undefined;
+  Calendar: undefined;
+  PersonalInformation: undefined;
+  SettingsHome: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -81,12 +87,21 @@ function DashboardTabs() {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={SettingsStack}
         options={{
           tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Settings"),
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+function SettingsStack() {
+  return(
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="SettingsHome" component={Settings} />
+      <Stack.Screen name="PersonalInformation" component={PersonalInformation}/>
+    </Stack.Navigator>
   );
 }
   
@@ -103,6 +118,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
+      <AccountContextProvider>
         <PaperProvider theme={theme}>
             <Stack.Navigator initialRouteName="Login">
               {isLoggedIn ? (
@@ -123,9 +139,9 @@ export default function App() {
                   </>
                 )
               }
-    
             </Stack.Navigator>
         </PaperProvider>
+      </AccountContextProvider>
     </SafeAreaProvider>
   );
 }

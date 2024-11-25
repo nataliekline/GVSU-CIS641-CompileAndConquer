@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   introContainer: {
       alignItems: 'center',
-      paddingVertical: 48,
+      paddingVertical: 40,
   },
   signupText: {
       fontSize: 32,
@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
       paddingHorizontal: 32,
-      paddingTop: 32,
   },
   input: {
       marginBottom: 20,
@@ -200,7 +199,7 @@ const styles = StyleSheet.create({
   },
   helpContainer: {
       alignItems: 'center',
-      paddingTop: 60,
+      paddingTop: 32,
   },
   helpText: {
       fontSize: 20,

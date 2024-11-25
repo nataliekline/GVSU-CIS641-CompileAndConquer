@@ -32,7 +32,7 @@ export function updateAccount(email: string, updatedFields: any, callback: () =>
     const accountRef = doc (db, ACCOUNT_PATH, email);
     updateDoc(accountRef, updatedFields)
         .then(() => {
-            console.log("Account with email", email, "deleted successfully");
+            console.log("Account with email", email, "updated successfully");
             callback();
         }).catch ((error) => {
             console.error("Error updating account", error);

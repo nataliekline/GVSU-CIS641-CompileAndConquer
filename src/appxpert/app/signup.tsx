@@ -31,6 +31,11 @@ const SignUpScreen = ({ navigation }: Props) => {
 
   const accountContext = useContext(AccountContext);
 
+  const handleConfirmPasswordChange = (text: string) => {
+    setConfirmPassword(text);
+    setPasswordError(false);
+  }
+
   const handleSignup = () => {
     setEmailError(false);
     setPasswordError(false);
@@ -38,20 +43,25 @@ const SignUpScreen = ({ navigation }: Props) => {
     setNameError(false);
     if (!name) {
       setNameError(true);
+      return;
     }
     if (!email) {
       setEmailError(true);
+      return;
     }
     if (!password) {
       setPasswordError(true);
+      return;
     }
     if (!confirmPassword) {
       setPasswordErrorMessage("Password is required again")
       setConfirmPasswordError(true);
+      return;
     }
     if (password != confirmPassword) {
       setPasswordErrorMessage("The Passwords don't match")
       setConfirmPasswordError(true);
+      return;
     }
     
     if (!emailError && !passwordError && !confirmPasswordError && !nameError) {
@@ -90,6 +100,7 @@ const SignUpScreen = ({ navigation }: Props) => {
           label="Enter your name"
           autoCapitalize='none'
           onChangeText={setName}
+          value={name}
           style={styles.input}
         />
         {nameError && <HelperText type="error">Name is required</HelperText>}
@@ -99,6 +110,7 @@ const SignUpScreen = ({ navigation }: Props) => {
           label="Enter your email"
           autoCapitalize='none'
           onChangeText={setEmail}
+          value={email}
           style={styles.input}
         />
         {emailError && <HelperText type="error">Email is required</HelperText>}
@@ -108,6 +120,7 @@ const SignUpScreen = ({ navigation }: Props) => {
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Enter your password"
           onChangeText={setPassword}
+          value={password}
           secureTextEntry={true}
           style={styles.input}
         />
@@ -117,7 +130,8 @@ const SignUpScreen = ({ navigation }: Props) => {
           mode='outlined'
           theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
           label="Re-enter your password"
-          onChangeText={setConfirmPassword}
+          onChangeText={handleConfirmPasswordChange}
+          value= {confirmPassword}
           secureTextEntry={true}
           style={styles.input}
         />

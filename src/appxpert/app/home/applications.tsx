@@ -4,9 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import KanbanColumn from "@/components/KanbanColumn";
 
 const Applications = () => {
-    const toDoCards = [
+    const backlogCards = [
         { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
+        { title: "Frontend Engineer", company: "Microsoft" },
         { title: "Software Engineer", company: "Amazon" },
         { title: "Software Engineer", company: "Google" },
         { title: "Software Engineer", company: "Microsoft" },
@@ -24,7 +24,19 @@ const Applications = () => {
         { title: "Software Engineer", company: "Microsoft" },
     ];
 
-    const inProgressCards = [
+    const actionCards = [
+        { title: "Software Engineer", company: "Google" },
+        { title: "Software Engineer", company: "Microsoft" },
+        { title: "Software Engineer", company: "Amazon" },
+    ];
+
+    const waitingCards = [
+        { title: "Software Engineer", company: "Google" },
+        { title: "Software Engineer", company: "Microsoft" },
+        { title: "Software Engineer", company: "Amazon" },
+    ];
+
+    const offerCards = [
         { title: "Software Engineer", company: "Google" },
         { title: "Software Engineer", company: "Microsoft" },
         { title: "Software Engineer", company: "Amazon" },
@@ -59,10 +71,12 @@ const Applications = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ScrollView horizontal contentContainerStyle={styles.kanbanContainer} style={{ flex: 1 }}>
-                <KanbanColumn title="To Do" cards={toDoCards} />
+            <ScrollView horizontal contentContainerStyle={styles.kanbanContainer}>
+                <KanbanColumn title="Opportunities" cards={backlogCards} />
                 <KanbanColumn title="Applied" cards={appliedCards} />
-                <KanbanColumn title="In Progress" cards={inProgressCards} />
+                <KanbanColumn title="Action Required" cards={actionCards} />
+                <KanbanColumn title="Waiting for Response" cards={waitingCards} />
+                <KanbanColumn title="Offer Received" cards={offerCards} />
                 <KanbanColumn title="Rejected" cards={rejectedCards} />
             </ScrollView>
         </SafeAreaView>

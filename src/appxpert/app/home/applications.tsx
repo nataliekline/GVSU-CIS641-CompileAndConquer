@@ -2,8 +2,12 @@ import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } fr
 import logoStyles from '../../styles/logo';
 import { Ionicons } from '@expo/vector-icons';
 import KanbanColumn from "@/components/KanbanColumn";
+import { RootStackParamList } from "../app";
+import { StackScreenProps } from '@react-navigation/stack';
 
-const Applications = () => {
+type ApplicationsScreenProps = StackScreenProps<RootStackParamList, 'ApplicationsHome'>;
+
+const Applications: React.FC<ApplicationsScreenProps> = ({navigation}) => {
     const backlogCards = [
         { title: "Software Engineer", company: "Google" },
         { title: "Frontend Engineer", company: "Microsoft" },
@@ -63,7 +67,7 @@ const Applications = () => {
             <View style={styles.introContainer}>
                 <Text style={styles.applicationsText}>Applications</Text>
                 <View style={styles.actionsContainer}>
-                    <TouchableOpacity onPress={() => {console.log('Future work')}}>
+                    <TouchableOpacity onPress={() => navigation.navigate('AppForm')}>
                         <Ionicons name={'add-outline'} size={20}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {console.log('Future work')}}>

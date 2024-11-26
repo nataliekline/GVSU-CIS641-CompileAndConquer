@@ -14,6 +14,7 @@ import SignUpScreen from './signup';
 import { auth } from '@/config/fb-config';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AppForm from './home/appForm';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -22,6 +23,8 @@ export type RootStackParamList = {
   SignUp: undefined;
   Calendar: undefined;
   PersonalInformation: undefined;
+  AppForm: undefined;
+  ApplicationsHome: undefined;
   SettingsHome: undefined;
 };
 
@@ -73,7 +76,7 @@ function DashboardTabs() {
       />
       <Tab.Screen
         name="Applications"
-        component={Applications}
+        component={ApplicationsStack}
         options={{
           tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Applications"),
         }}
@@ -93,6 +96,15 @@ function DashboardTabs() {
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+function ApplicationsStack() {
+  return(
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="ApplicationsHome" component={Applications} />
+      <Stack.Screen name="AppForm" component={AppForm}/>
+    </Stack.Navigator>
   );
 }
 

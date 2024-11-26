@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     logoContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        paddingTop: 24,
+        paddingTop: 32,
     },
     profileContainer: {
         alignItems: 'center',

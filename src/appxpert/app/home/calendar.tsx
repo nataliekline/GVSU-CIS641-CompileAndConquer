@@ -13,16 +13,20 @@ const Calendar : React.FC<{ navigation: any }> = ({ navigation }) => {
     const [selectedDate, setSelectedDate] = useState<string>("");
     const [events, setEvents] = useState<EventData[]>([]);
     const [eventsData, setEventsData] = useState<Record<string, EventData[]>>({});
-
     const handleDayPress = (day: { dateString: string }) => {
         setSelectedDate(day.dateString);
         setEvents(eventsData[day.dateString] || []);
     };
 
+    const handlePressEvent = (eventId: string) => {
+        navigation.navigate('NewEvent', { eventId: eventId });
+    }
+
     useEffect(() => {
         setupListenerOverEvents(accountContext.account.email, (response: Record<string, EventData[]>) => {
             setEventsData(response);
-        })
+            handleDayPress({dateString: selectedDate});
+        });
     }, []);
     
     return (
@@ -71,10 +75,12 @@ const Calendar : React.FC<{ navigation: any }> = ({ navigation }) => {
                         data={events}
                         keyExtractor = {(item) => item.id}
                         renderItem={({ item }) => (
-                        <View style={styles.eventItem}>
-                            <Text style={styles.eventTitle}>{item.eventType} - {item.applicationCompany}</Text>
-                            <Text style={styles.eventTime}>{item.time}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => handlePressEvent(item.id)}>
+                            <View style={styles.eventItem}>
+                                <Text style={styles.eventTitle}>{item.eventType} - {item.applicationCompany}</Text>
+                                <Text style={styles.eventTime}>{item.time}</Text>
+                            </View>
+                        </TouchableOpacity>
                         )}
                     />
                     ) : (

@@ -1,5 +1,6 @@
+import { Alert, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Button, Menu, TextInput } from "react-native-paper";
-import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { createNewEvent, deleteEvent, getEvent, updateEvent } from "@/persistence/EventStore";
 import { useContext, useEffect, useState } from "react";
 
 import { AccountContext } from "@/context/AccountContext";
@@ -8,7 +9,6 @@ import AppGradient from '@/components/AppGradient';
 import { Dropdown } from "react-native-element-dropdown";
 import { Event } from "@/models/Event";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
-import { createNewEvent } from "@/persistence/EventStore";
 
 const OPTIONS = [
     { label: 'Google', value: '1' },
@@ -33,17 +33,37 @@ const EVENT_TYPE_OPTIONS = [
     { label: 'Technical Interview', value: 'Technical Interview' },
 ];
 
-const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
-    const accountContext = useContext(AccountContext); 
+const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}) => {
+    const accountContext = useContext(AccountContext);
+    const [companyValue, setCompanyValue] = useState<string>("");
+    const [durationValue, setDurationValue] = useState<string>("");
+    const [eventType, setEventType] = useState<string>("");
+    const [isFocus, setIsFocus] = useState(false);
+    const [eventId, setEventId] = useState("");
+    
     const initialNewEvent: Event = {
         eventType: "",
         applicationId: "",
-        date: new Date().toISOString().split('T')[0] ,
+        date: toISOStringWithTimezone(new Date()).split('T')[0] ,
         time: formatTimeTo12Hour(new Date()),
         applicationCompany: "",
         duration: "30m",
     };
     const [newEvent, setNewEvent] = useState<Event>(initialNewEvent);
+
+    useEffect(() => {
+        if (route.params?.eventId) {
+            setEventId(route.params.eventId);
+            getEvent(accountContext.account.email, route.params?.eventId, (data) => {
+                if (data) {
+                    setNewEvent(data);
+                    setCompanyValue(data.applicationId);
+                    setDurationValue(data.duration);
+                    setEventType(data.eventType);
+                }
+            });
+        } 
+    }, [route.params?.eventId] );
 
     const updateEventObject = (vals: any) => {
         setNewEvent({
@@ -75,26 +95,63 @@ const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
 
     const handleDateChange = (event: any, date?: Date) => {
         if (date) {
-          updateEventObject({date: date.toISOString().split('T')[0]});
+            updateEventObject({date: toISOStringWithTimezone(date).split('T')[0]});
         }
     };
     
+    function toISOStringWithTimezone(date: Date) {
+        const pad = (n: number) => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
+      
+        const timezoneOffset = date.getTimezoneOffset();
+        const diff = timezoneOffset >= 0 ? '-' : '+';
+        const offsetHours = pad(Math.floor(Math.abs(timezoneOffset) / 60));
+        const offsetMinutes = pad(Math.abs(timezoneOffset) % 60);
+      
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds())}${diff}${offsetHours}:${offsetMinutes}`;
+    }
+      
     const handleTimeChange = (event: any, time?: Date) => {
         if (time) {
             updateEventObject({time: formatTimeTo12Hour(time)});
         }
     };
 
+    const handleDelete = () => {
+        console.log(newEvent);
+        Alert.alert(
+            "Confirm",
+            "Are you sure you want to delete this event?",
+            [
+              {
+                text: "Yes",
+                onPress: () => {
+                    deleteEvent(accountContext.account.email, eventId, () => {
+                        console.log("Event deleted Successfully");
+                        navigation.goBack();
+                    });
+                },
+              },
+              {
+                text: "No",
+              },
+            ]
+        );
+    }
+
     function handleSave() {
         console.log(newEvent);
-        createNewEvent(accountContext.account.email, newEvent, (responseMessage) => {
-            console.log("Event created succesfull")
-            navigation.goBack();
-        });
+        if (eventId != "") {
+            updateEvent (accountContext.account.email, eventId, newEvent, () => {
+                console.log("Event updated successfully")
+                navigation.goBack();
+            })
+        } else {
+            createNewEvent(accountContext.account.email, newEvent, (responseMessage) => {
+                console.log("Event created succesfully")
+                navigation.goBack();
+            });
+        }
     }
-    const [companyValue, setCompanyValue] = useState<string>("");
-    const [durationValue, setDurationValue] = useState<string>("");
-    const [isFocus, setIsFocus] = useState(false);
 
     return (
         <AppGradient>
@@ -111,12 +168,13 @@ const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
-                        placeholder={!isFocus ? 'Select Duration' : '...'}
-                        value={durationValue}
+                        placeholder={!isFocus ? 'Select Event Type' : '...'}
+                        value={eventType}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             updateEventObject({eventType: item.value});
+                            setEventType(item.value)
                             setIsFocus(false);
                         }}
                         renderLeftIcon={() => (
@@ -146,6 +204,7 @@ const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
                             updateEventObject({applicationId: item.value , applicationCompany: item.label});
+                            setCompanyValue(item.value);
                             setIsFocus(false);
                         }}
                         renderLeftIcon={() => (
@@ -169,7 +228,7 @@ const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
                     <View style = {styles.datetime}>
                         <RNDateTimePicker
                             testID="dateTimePicker"
-                            value={new Date(newEvent.date)}
+                            value={new Date(newEvent.date + 'T' + convert12HourTo24Hour(newEvent.time))}
                             mode="date"
                             is24Hour={true}
                             onChange={handleDateChange}
@@ -199,6 +258,7 @@ const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
                             onBlur={() => setIsFocus(false)}
                             onChange={item => {
                                 updateEventObject({duration: item.value});
+                                setDurationValue(item.value);
                                 setIsFocus(false);
                             }}
                             renderLeftIcon={() => (
@@ -235,6 +295,15 @@ const NewEvent: React.FC<{ navigation: any }> = ({ navigation }) => {
                                 </Button>
                             </TouchableOpacity>
                         </View>
+                        {eventId != "" ? (
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity onPress={handleDelete}>
+                                    <Button mode='contained' style={styles.signupButton} labelStyle={styles.buttonLabel}>
+                                        Delete
+                                    </Button>
+                                </TouchableOpacity>
+                            </View>
+                        ): (<></>)}
                     </View>
                 </View>
             </ScrollView>

@@ -29,37 +29,37 @@ export function deleteEvent(email:string, eventId: string, callback: () => void)
         });
 }
 
-export function updateAccount(email:string, eventId: string, updatedFields: any, callback: () => void) {
+export function updateEvent(email:string, eventId: string, updatedFields: any, callback: () => void) {
     const accountRef = doc(db, ACCOUNT_PATH, email);
     const eventRef = doc(accountRef, EVENT_PATH, eventId);
     updateDoc(eventRef, updatedFields)
         .then(() => {
-            console.log("Account with email", email, "updated successfully");
+            console.log("Event with id", eventId, "updated successfully");
             callback();
         }).catch ((error) => {
             console.error("Error updating account", error);
         });
 }
 
-export function getEvent(email:string, eventId: string, callback: (response: any) => void) {
+export function getEvent(email:string, eventId: string, callback: (response: Event) => void) {
     const accountRef = doc (db, ACCOUNT_PATH, email);
     const eventRef = doc(accountRef, EVENT_PATH, eventId);
     getDoc(eventRef)
     .then((doc) => {
         if (doc.exists()) {
-            callback(doc.data());
+            callback(doc.data() as Event);
         } else {
-            console.log("Account does not exists");
+            console.log("Event does not exists");
         }
     }).catch ((error) => {
-        console.error("Error updating account", error);
+        console.error("Error updating Event", error);
     });
 }
 
 export function setupListenerOverEvents(email: string , callback: (response: Record<string, EventData[]>) => void){
     const accountRef = doc(db, ACCOUNT_PATH, email);
     const subCollectionRef = collection(accountRef, EVENT_PATH);
-    const unsubscribe = onSnapshot(subCollectionRef, (querySnapshot) => {
+    onSnapshot(subCollectionRef, (querySnapshot) => {
         const fetchedEvents: Record<string, EventData[]> = {};
         if (!querySnapshot.empty) {
             const results: any[] = [];
@@ -77,6 +77,4 @@ export function setupListenerOverEvents(email: string , callback: (response: Rec
     },(error) => {
         console.error(error)
     });
-
-    return unsubscribe;
 }

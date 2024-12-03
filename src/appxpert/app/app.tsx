@@ -2,11 +2,13 @@ import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import React, { useState } from 'react';
 
 import { AccountContextProvider } from '@/context/AccountContext';
+import AppForm from './home/appForm';
 import Applications from './home/applications';
 import Calendar from './home/calendar';
 import Dashboard from './home/dashboard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoginScreen from "./login";
+import NewEvent from './home/newEvent';
 import PersonalInformation from './home/personalInformation';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Settings from './home/settings';
@@ -14,18 +16,18 @@ import SignUpScreen from './signup';
 import { auth } from '@/config/fb-config';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AppForm from './home/appForm';
 
 export type RootStackParamList = {
   Home: undefined;
   Dashboard: undefined;
   Login: undefined;
   SignUp: undefined;
-  Calendar: undefined;
   PersonalInformation: undefined;
   AppForm: undefined;
   ApplicationsHome: undefined;
   SettingsHome: undefined;
+  CalendarHome: undefined;
+  NewEvent: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -83,7 +85,7 @@ function DashboardTabs() {
       />
       <Tab.Screen
         name="Calendar"
-        component={Calendar}
+        component={EventsStack}
         options={{
           tabBarIcon: ({ focused, color }: TabBarIconProps) => getTabBarIcon(focused, color, "Calendar"),
         }}
@@ -113,6 +115,15 @@ function SettingsStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SettingsHome" component={Settings} />
       <Stack.Screen name="PersonalInformation" component={PersonalInformation}/>
+    </Stack.Navigator>
+  );
+}
+
+function EventsStack() {
+  return(
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CalendarHome" component={Calendar} />
+      <Stack.Screen name="NewEvent" component={NewEvent}/>
     </Stack.Navigator>
   );
 }

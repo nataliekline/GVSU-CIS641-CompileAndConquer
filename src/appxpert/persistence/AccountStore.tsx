@@ -3,7 +3,7 @@ import { DocumentData, addDoc, collection, deleteDoc, doc, getDoc, getDocs, limi
 import { Account } from "@/models/Account";
 import { db } from '../config/fb-config'
 
-const ACCOUNT_PATH = "accounts";
+export const ACCOUNT_PATH = "accounts";
 
 export function createNewAccount(accountObject: { name: string; email: string; }, responseFunction: { (response: any): void; (arg0: void): void; }) {
     console.log("llega esto", accountObject);

@@ -36,7 +36,6 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
     const [isFocus, setIsFocus] = useState(false);
 
     const initialNewApplication: Application = {
-        applicationId: "",
         position: "",
         companyName: "",
         status: "",

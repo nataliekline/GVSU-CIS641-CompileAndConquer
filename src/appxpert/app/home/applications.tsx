@@ -11,16 +11,16 @@ const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
     const accountContext = useContext(AccountContext); 
     const [applicationsData, setApplicationsData] = useState<ApplicationData[]>([]);
 
-    const backlogCards: { title: string; company: string }[] = [];
-    const appliedCards: { title: string; company: string }[] = [];
-    const actionCards: { title: string; company: string }[] = [];
-    const waitingCards: { title: string; company: string }[] = [];
-    const offerCards: { title: string; company: string }[] = [];
-    const rejectedCards: { title: string; company: string }[] = [];
+    const backlogCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
+    const appliedCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
+    const actionCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
+    const waitingCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
+    const offerCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
+    const rejectedCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];    
 
-    // const handlePressApplication = (applicationId: string) => {
-    //     navigation.navigate('NewApplication', { applicationId: applicationId });
-    // }
+    const handlePressApplication = (applicationId: string) => {
+        navigation.navigate('NewApplication', { applicationId: applicationId });
+    }
 
     useEffect(() => {
         const unsubscribe = setupListenerOverApplications(
@@ -34,7 +34,12 @@ const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
     }, []);
 
     applicationsData.forEach((application) => {
-        const card = { title: application.position, company: application.companyName };
+        const card = { 
+            applicationId: application.id, 
+            title: application.position, 
+            company: application.companyName,
+            onPress: handlePressApplication,
+        };
     
         if (application.status === "Opportunities") {
             backlogCards.push(card);
@@ -69,12 +74,12 @@ const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
                 </View>
             </View>
             <ScrollView horizontal contentContainerStyle={styles.kanbanContainer}>
-                <KanbanColumn title="Opportunities" cards={backlogCards} />
-                <KanbanColumn title="Applied" cards={appliedCards} />
-                <KanbanColumn title="Action Required" cards={actionCards} />
-                <KanbanColumn title="Waiting for Response" cards={waitingCards} />
-                <KanbanColumn title="Offer Received" cards={offerCards} />
-                <KanbanColumn title="Rejected" cards={rejectedCards} />
+                <KanbanColumn title="Opportunities" cards={backlogCards} navigation={navigation} />
+                <KanbanColumn title="Applied" cards={appliedCards} navigation={navigation} />
+                <KanbanColumn title="Action Required" cards={actionCards} navigation={navigation}/>
+                <KanbanColumn title="Waiting for Response" cards={waitingCards} navigation={navigation}/>
+                <KanbanColumn title="Offer Received" cards={offerCards} navigation={navigation}/>
+                <KanbanColumn title="Rejected" cards={rejectedCards} navigation={navigation}/>
             </ScrollView>
         </SafeAreaView>
     )

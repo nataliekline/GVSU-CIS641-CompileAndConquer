@@ -3,13 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Octicons from '@expo/vector-icons/Octicons';
 
 interface CardProps {
+    applicationId: string;
     title: string;
     company: string;
+    onPress: (applicationId: string) => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, company }) => {
+const Card: React.FC<CardProps> = ({ applicationId, title, company, onPress }) => {
   return (
-    <TouchableOpacity onPress={() => {console.log('Future Work')}}>
+    <TouchableOpacity onPress={() => onPress(applicationId)}>
         <View style={styles.cardContainer}>
             <View>
                 <Text style={styles.cardTitle}>{title}</Text>

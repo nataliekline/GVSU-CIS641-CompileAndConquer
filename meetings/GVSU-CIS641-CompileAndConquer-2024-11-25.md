@@ -10,7 +10,7 @@ Discussion points:
 
 * Reviewed all of the deliverables required and decided to have all functionality completed by next Wednesday so that we have a few days to update our artifacts and requirements
 * Demonstrated our individual responsibilities completed this past week, including implementing a kanban style board on the applications screen and integrating a calendar package on the calendar screen
-* Discussed the remaining functionality we wanted to implement for this project since we only have a week left which included all CRUD operations for applications and events. 
+* Discussed the remaining functionality we wanted to implement for this project since we only have a week left which included all CRUD operations for applications and events
 
 Goals for next week (include responsibilities):
 

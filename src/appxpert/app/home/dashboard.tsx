@@ -43,11 +43,36 @@ const Dashboard = () => {
                 <Text style={styles.regularPaddingText}>Great work!</Text>
                 <Text style={styles.overallText}>Overall</Text>
 
-                {/* Delete Me */}
-                <View style={{justifyContent: 'center', alignContent: 'center', height: 175}}>
-                    <Text>Chart goes here, delete me after!</Text>
+                {/* Metric Circles */}
+                <View style={styles.container}>
+                    <View style={styles.leftCircle}>
+                        <LinearGradient
+                        colors={['#D0CDC7', '#6A6865']}
+                        style={styles.bigCircles}
+                        >
+                        <Text style={styles.bubbleText}>In Review</Text>
+                        <Text style={styles.text}>{45}%</Text>
+                        </LinearGradient>
+                    </View>
+                    <View style={styles.middleCircle}>
+                        <LinearGradient
+                        colors={['#7AC2FD', '#2E4C65']}
+                        style={styles.bigCircles}
+                        >
+                        <Text style={styles.bubbleText}>Success Rate</Text>
+                        <Text style={styles.successText}>{5}%</Text>
+                        </LinearGradient>
+                    </View>
+                    <View style={styles.rightCircle}>
+                        <LinearGradient
+                        colors={['#D0CDC7', '#6A6865']}
+                        style={styles.bigCircles}
+                        >
+                        <Text style={styles.bubbleText}>Rejected</Text>
+                        <Text style={styles.text}>{50}%</Text>
+                        </LinearGradient>
+                    </View>
                 </View>
-                {/* Delete Me */}
 
                 <View style={styles.footerContainer}>
                     <View style={styles.textRow}>
@@ -116,6 +141,59 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16, 
         textAlign: 'center',
+    },
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 20,
+      },
+    middleCircle: {
+        width: 130,
+        height: 130,
+        borderRadius: 65,
+        overflow: 'hidden',
+        position: 'relative',
+        marginHorizontal: 10,
+        transform: [{ translateY: -50 }],
+    },
+    leftCircle: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        overflow: 'hidden',
+        position: 'relative',
+        marginHorizontal: 10,
+        marginRight: -22,
+    },
+    rightCircle: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        overflow: 'hidden',
+        position: 'relative',
+        marginHorizontal: 10,
+        marginLeft: -22,
+    },
+    bigCircles: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bubbleText: {
+        color: 'black',
+        fontSize: 12,
+        paddingBottom: 8,
+    },
+    text: {
+        color: 'black',
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    successText: {
+        color: 'black',
+        fontSize: 40,
+        fontWeight: 'bold',
+        paddingBottom: 8,
     },
 });
 

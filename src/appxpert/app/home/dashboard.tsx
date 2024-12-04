@@ -3,10 +3,12 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { AccountContext } from "@/context/AccountContext";
 import { LinearGradient } from 'expo-linear-gradient';
 import logoStyles from '../../styles/logo';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useApplicationContext } from "@/context/ApplicationContext";
 
 const Dashboard = () => {
     const accountContext = useContext(AccountContext);
+    const { totalApplications } = useApplicationContext();
 
     return (
         <SafeAreaView>
@@ -81,7 +83,7 @@ const Dashboard = () => {
                     </View>
                     <View style={styles.textRow}>
                         <Text style={styles.boldText}>Total Applications Submitted: </Text>
-                        <Text style={styles.regularText}>58</Text>
+                        <Text style={styles.regularText}>{totalApplications}</Text>
                     </View>
                 </View>
             </View>

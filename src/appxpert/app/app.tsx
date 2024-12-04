@@ -16,6 +16,7 @@ import SignUpScreen from './signup';
 import { auth } from '@/config/fb-config';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ApplicationProvider } from '@/context/ApplicationContext';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -142,28 +143,30 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AccountContextProvider>
-        <PaperProvider theme={theme}>
-            <Stack.Navigator initialRouteName="Login">
-              {isLoggedIn ? (
-                   <Stack.Screen name="Home" component={DashboardTabs} options={{ headerShown : false}}/>
-                ) : (
-                  <>
-                    <Stack.Screen 
-                          name="Login" 
-                          component={LoginScreen} 
-                          options={{ headerShown : false }} 
-                      />
+        <ApplicationProvider>
+          <PaperProvider theme={theme}>
+              <Stack.Navigator initialRouteName="Login">
+                {isLoggedIn ? (
+                    <Stack.Screen name="Home" component={DashboardTabs} options={{ headerShown : false}}/>
+                  ) : (
+                    <>
                       <Stack.Screen 
-                          name="SignUp" 
-                          component={SignUpScreen} 
-                          options={{ headerShown : false }} 
-                      />
-                  
-                  </>
-                )
-              }
-            </Stack.Navigator>
-        </PaperProvider>
+                            name="Login" 
+                            component={LoginScreen} 
+                            options={{ headerShown : false }} 
+                        />
+                        <Stack.Screen 
+                            name="SignUp" 
+                            component={SignUpScreen} 
+                            options={{ headerShown : false }} 
+                        />
+                    
+                    </>
+                  )
+                }
+              </Stack.Navigator>
+          </PaperProvider>
+        </ApplicationProvider>
       </AccountContextProvider>
     </SafeAreaProvider>
   );

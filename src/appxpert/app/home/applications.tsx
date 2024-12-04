@@ -6,9 +6,11 @@ import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "@/context/AccountContext";
 import { ApplicationData } from "@/models/Application";
 import { setupListenerOverApplications } from "@/persistence/ApplicationStore";
+import { useApplicationContext } from "@/context/ApplicationContext";
 
 const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
     const accountContext = useContext(AccountContext); 
+    const { setTotalApplications } = useApplicationContext();
     const [applicationsData, setApplicationsData] = useState<ApplicationData[]>([]);
 
     const backlogCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
@@ -27,7 +29,6 @@ const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
             accountContext.account.email,
             (response: ApplicationData[]) => {
                 setApplicationsData(response);
-                console.log("Real-time applications:", response);
             }
         );
         return () => unsubscribe();
@@ -55,6 +56,17 @@ const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
             rejectedCards.push(card);
         }
     });
+
+    useEffect(() => {
+        const totalApplications = backlogCards.length 
+            + appliedCards.length 
+            + actionCards.length 
+            + waitingCards.length 
+            + offerCards.length 
+            + rejectedCards.length;
+
+        setTotalApplications(totalApplications);
+    }, [backlogCards, appliedCards, actionCards, waitingCards, offerCards, rejectedCards]);
 
     return (
         <SafeAreaView style={styles.container}>

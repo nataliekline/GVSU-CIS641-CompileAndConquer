@@ -2,68 +2,54 @@ import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Fla
 import logoStyles from '../../styles/logo';
 import { Ionicons } from '@expo/vector-icons';
 import KanbanColumn from "@/components/KanbanColumn";
-import { RootStackParamList } from "../app";
-import { StackScreenProps } from '@react-navigation/stack';
 import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "@/context/AccountContext";
 import { ApplicationData } from "@/models/Application";
+import { setupListenerOverApplications } from "@/persistence/ApplicationStore";
 
-type ApplicationsScreenProps = StackScreenProps<RootStackParamList, 'ApplicationsHome'>;
-
-const Applications: React.FC<ApplicationsScreenProps> = ({navigation}) => {
+const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
     const accountContext = useContext(AccountContext); 
-    const [applications, setApplications] = useState<ApplicationData[]>([]);
-    const [applicationsData, setApplicationsData] = useState<Record<string, ApplicationData[]>>({});
+    const [applicationsData, setApplicationsData] = useState<ApplicationData[]>([]);
 
-    const backlogCards = [
-        { title: "Software Engineer", company: "Google" },
-        { title: "Frontend Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-    ];
+    const backlogCards: { title: string; company: string }[] = [];
+    const appliedCards: { title: string; company: string }[] = [];
+    const actionCards: { title: string; company: string }[] = [];
+    const waitingCards: { title: string; company: string }[] = [];
+    const offerCards: { title: string; company: string }[] = [];
+    const rejectedCards: { title: string; company: string }[] = [];
+
+    // const handlePressApplication = (applicationId: string) => {
+    //     navigation.navigate('NewApplication', { applicationId: applicationId });
+    // }
+
+    useEffect(() => {
+        const unsubscribe = setupListenerOverApplications(
+            accountContext.account.email,
+            (response: ApplicationData[]) => {
+                setApplicationsData(response);
+                console.log("Real-time applications:", response);
+            }
+        );
+        return () => unsubscribe();
+    }, []);
+
+    applicationsData.forEach((application) => {
+        const card = { title: application.position, company: application.companyName };
     
-    const appliedCards = [
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-    ];
-
-    const actionCards = [
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-    ];
-
-    const waitingCards = [
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-    ];
-
-    const offerCards = [
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-    ];
-
-    const rejectedCards = [
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-        { title: "Software Engineer", company: "Google" },
-        { title: "Software Engineer", company: "Microsoft" },
-        { title: "Software Engineer", company: "Amazon" },
-    ];
+        if (application.status === "Opportunities") {
+            backlogCards.push(card);
+        } else if (application.status === "Applied") {
+            appliedCards.push(card);
+        } else if (application.status === "Action Required") {
+            actionCards.push(card);
+        } else if (application.status === "Waiting for Response") {
+            waitingCards.push(card);
+        } else if (application.status === "Offer Received") {
+            offerCards.push(card);
+        } else if (application.status === "Rejected") {
+            rejectedCards.push(card);
+        }
+    });
 
     return (
         <SafeAreaView style={styles.container}>
@@ -82,22 +68,6 @@ const Applications: React.FC<ApplicationsScreenProps> = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            {applications.length > 0 ? (
-                <FlatList
-                    data={applications}
-                    keyExtractor = {(item) => item.id}
-                    renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => {}}>
-                        <View>
-                            <Text>{item.applicationId} - {item.position}</Text>
-                            <Text>{item.salary}</Text>
-                        </View>
-                    </TouchableOpacity>
-                    )}
-                />
-                ) : (
-                <Text>No applications</Text>
-            )}
             <ScrollView horizontal contentContainerStyle={styles.kanbanContainer}>
                 <KanbanColumn title="Opportunities" cards={backlogCards} />
                 <KanbanColumn title="Applied" cards={appliedCards} />

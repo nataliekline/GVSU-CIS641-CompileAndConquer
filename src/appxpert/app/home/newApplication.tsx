@@ -33,12 +33,6 @@ const SALARY_OPTIONS = [
 const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation, route }) => {
     const accountContext = useContext(AccountContext);
     const [applicationId, setApplicationId] = useState("");
-    const [statusValue, setStatusValue] = useState<string>("");
-    const [positionValue, setPositionValue] = useState<string>("");
-    const [companyNameValue, setCompanyNameValue] = useState<string>("");
-    const [dateSubmittedValue, setDateSubmittedValue] = useState<string>("");
-    const [formatValue, setFormatValue] = useState<string>("");
-    const [salaryValue, setSalaryValue] = useState<string>("");
     const [isFocus, setIsFocus] = useState(false);
 
     const initialNewApplication: Application = {
@@ -46,7 +40,7 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
         position: "",
         companyName: "",
         status: "",
-        dateSubmitted: "",
+        dateSubmitted: new Date().toISOString().split('T')[0],
     };
 
     const [newApplication, setNewApplication] = useState<Application>(initialNewApplication);
@@ -57,10 +51,6 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
             getApplication(accountContext.account.email, route.params?.applicationId, (data) => {
                 if (data) {
                     setNewApplication(data);
-                    setStatusValue(data.status);
-                    setPositionValue(data.position);
-                    setCompanyNameValue(data.companyName);
-                    setDateSubmittedValue(data.dateSubmitted);
                 }
             });
         } 
@@ -68,8 +58,8 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
 
     const updateApplicationObject = (vals: any) => {
         setNewApplication({
-          ...newApplication,
-          ...vals,
+            ...newApplication,
+            ...vals,
         });
     };
 
@@ -152,12 +142,14 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Select Status' : '...'}
-                        value={statusValue}
+                        value={newApplication.status}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            updateApplicationObject({statusValue: item.value});
-                            setStatusValue(item.value)
+                            setNewApplication(prev => ({
+                                ...prev,
+                                status: item.value,
+                            }));
                             setIsFocus(false);
                         }}
                     />
@@ -171,12 +163,14 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Select Format' : '...'}
-                        value={formatValue}
+                        value={newApplication.format}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            updateApplicationObject({formatValue: item.value});
-                            setFormatValue(item.value)
+                            setNewApplication(prev => ({
+                                ...prev,
+                                format: item.value,
+                            }));
                             setIsFocus(false);
                         }}
                     />
@@ -190,12 +184,14 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Select Salary' : '...'}
-                        value={salaryValue}
+                        value={newApplication.salary}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            updateApplicationObject({salaryValue: item.value});
-                            setSalaryValue(item.value)
+                            setNewApplication(prev => ({
+                                ...prev,
+                                salary: item.value,
+                            }));
                             setIsFocus(false);
                         }}
                     />

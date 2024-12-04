@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         padding: 12,
         marginRight: 8,
+        width: 250,
     },
     kanbanViewTitle: {
         fontSize: 16,

@@ -56,3 +56,28 @@ export function getApplication(email: string, applicationId: string, callback: (
             console.error("Error updating application", error);
         });
 }
+
+export function setupListenerOverApplications(email: string, callback: (response: ApplicationData[]) => void): () => void {
+    const accountRef = doc(db, ACCOUNT_PATH, email);
+    const applicationsRef = collection(accountRef, APPLICATIONS_PATH);
+
+    const unsubscribe = onSnapshot(
+        applicationsRef,
+        (querySnapshot) => {
+            const fetchedApplications: ApplicationData[] = [];
+
+            if (!querySnapshot.empty) {
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data() as Application;
+                    fetchedApplications.push({ ...data, id: doc.id });
+                });
+            }
+            callback(fetchedApplications);
+        },
+        (error) => {
+            console.error(error);
+        }
+    );
+
+    return unsubscribe;
+}

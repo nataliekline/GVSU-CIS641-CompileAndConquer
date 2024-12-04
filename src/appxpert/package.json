@@ -15,7 +15,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@expo/vector-icons": "^14.0.4",
+    "@mui/material": "^6.1.9",
+    "@mui/x-date-pickers": "^7.23.0",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.1.18",
@@ -36,6 +40,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
     "react-native-calendars": "^1.1307.0",
+    "react-native-date-picker": "^5.0.7",
     "react-native-element-dropdown": "^2.12.2",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-paper": "^5.12.5",

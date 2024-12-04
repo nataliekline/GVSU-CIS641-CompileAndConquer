@@ -156,8 +156,8 @@ const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}
     return (
         <AppGradient>
             <ScrollView>
-                <View style={styles.bodyContainer}>
-                    <Text style={styles.accountText}>New Event</Text>
+                <View style={styles.container}>
+                    <Text style={styles.text}>New Event</Text>
                     <Dropdown
                         style={[styles.dropdown, isFocus && { borderColor: 'gray' }]}
                         placeholderStyle={styles.placeholderStyle}
@@ -283,14 +283,14 @@ const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}
                     <View style= {{ flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={handleSave}>
-                                <Button mode='contained' style={styles.signupButton} labelStyle={styles.buttonLabel}>
+                                <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
                                     Save
                                 </Button>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Button mode='contained' style={styles.signupButton} labelStyle={styles.buttonLabel}>
+                                <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
                                     Back
                                 </Button>
                             </TouchableOpacity>
@@ -298,7 +298,7 @@ const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}
                         {eventId != "" ? (
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity onPress={handleDelete}>
-                                    <Button mode='contained' style={styles.signupButton} labelStyle={styles.buttonLabel}>
+                                    <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
                                         Delete
                                     </Button>
                                 </TouchableOpacity>
@@ -312,25 +312,10 @@ const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}
 }
 
 const styles = StyleSheet.create({
-    logoContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        paddingTop: 24,
-    },
-    profileContainer: {
-        alignItems: 'center',
-        paddingVertical: 32,
-    },
-    nameText: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: 'white',
-        paddingTop: 8,
-    },
-    bodyContainer: {
+    container: {
         paddingHorizontal: 40, 
     },
-    accountText: {
+    text: {
         fontSize: 20,
         fontWeight: 'bold',
         color: '#2E4C65',
@@ -345,7 +330,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
        
     },
-    signupButton: {
+    button: {
         backgroundColor: '#4D3E3E',
         borderRadius: 8,
         alignItems: 'center',

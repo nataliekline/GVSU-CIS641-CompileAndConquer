@@ -1,13 +1,20 @@
-import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, FlatList } from "react-native";
 import logoStyles from '../../styles/logo';
 import { Ionicons } from '@expo/vector-icons';
 import KanbanColumn from "@/components/KanbanColumn";
 import { RootStackParamList } from "../app";
 import { StackScreenProps } from '@react-navigation/stack';
+import { useContext, useEffect, useState } from "react";
+import { AccountContext } from "@/context/AccountContext";
+import { ApplicationData } from "@/models/Application";
 
 type ApplicationsScreenProps = StackScreenProps<RootStackParamList, 'ApplicationsHome'>;
 
 const Applications: React.FC<ApplicationsScreenProps> = ({navigation}) => {
+    const accountContext = useContext(AccountContext); 
+    const [applications, setApplications] = useState<ApplicationData[]>([]);
+    const [applicationsData, setApplicationsData] = useState<Record<string, ApplicationData[]>>({});
+
     const backlogCards = [
         { title: "Software Engineer", company: "Google" },
         { title: "Frontend Engineer", company: "Microsoft" },
@@ -75,6 +82,22 @@ const Applications: React.FC<ApplicationsScreenProps> = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            {applications.length > 0 ? (
+                <FlatList
+                    data={applications}
+                    keyExtractor = {(item) => item.id}
+                    renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => {}}>
+                        <View>
+                            <Text>{item.applicationId} - {item.position}</Text>
+                            <Text>{item.salary}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    )}
+                />
+                ) : (
+                <Text>No applications</Text>
+            )}
             <ScrollView horizontal contentContainerStyle={styles.kanbanContainer}>
                 <KanbanColumn title="Opportunities" cards={backlogCards} />
                 <KanbanColumn title="Applied" cards={appliedCards} />

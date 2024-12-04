@@ -44,8 +44,8 @@ const PersonalInformation: React.FC<{ navigation: any }> = ({ navigation }) => {
 
     return (
         <AppGradient>
-            <View style={styles.bodyContainer}>
-                <Text style={styles.accountText}>Personal Information</Text>
+            <View style={styles.container}>
+                <Text style={styles.text}>Personal Information</Text>
                 <TextInput
                     mode='outlined'
                     theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
@@ -76,14 +76,14 @@ const PersonalInformation: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <View style= {{ flexDirection: 'row', justifyContent: 'space-evenly'}}>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={handleSave}>
-                            <Button mode='contained' style={styles.signupButton} labelStyle={styles.buttonLabel}>
+                            <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
                                 Save
                             </Button>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Button mode='contained' style={styles.signupButton} labelStyle={styles.buttonLabel}>
+                            <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
                                 Back
                             </Button>
                         </TouchableOpacity>
@@ -96,25 +96,10 @@ const PersonalInformation: React.FC<{ navigation: any }> = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    logoContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        paddingTop: 24,
-    },
-    profileContainer: {
-        alignItems: 'center',
-        paddingVertical: 32,
-    },
-    nameText: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: 'white',
-        paddingTop: 8,
-    },
-    bodyContainer: {
+    container: {
         paddingHorizontal: 40, 
     },
-    accountText: {
+    text: {
         fontSize: 20,
         fontWeight: 'bold',
         color: '#2E4C65',
@@ -126,10 +111,9 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         paddingVertical: 20,
-        alignItems: 'center',
-       
+        alignItems: 'center',  
     },
-    signupButton: {
+    button: {
         backgroundColor: '#4D3E3E',
         borderRadius: 8,
         alignItems: 'center',

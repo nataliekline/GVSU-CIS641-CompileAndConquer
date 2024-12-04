@@ -67,7 +67,7 @@ const Applications: React.FC<ApplicationsScreenProps> = ({navigation}) => {
             <View style={styles.introContainer}>
                 <Text style={styles.applicationsText}>Applications</Text>
                 <View style={styles.actionsContainer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('AppForm')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('NewApplication')}>
                         <Ionicons name={'add-outline'} size={20}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {console.log('Future work')}}>

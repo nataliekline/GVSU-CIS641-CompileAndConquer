@@ -2,12 +2,12 @@ import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import React, { useState } from 'react';
 
 import { AccountContextProvider } from '@/context/AccountContext';
-import AppForm from './home/appForm';
 import Applications from './home/applications';
 import Calendar from './home/calendar';
 import Dashboard from './home/dashboard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoginScreen from "./login";
+import NewApplication from './home/newApplication';
 import NewEvent from './home/newEvent';
 import PersonalInformation from './home/personalInformation';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -23,8 +23,8 @@ export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   PersonalInformation: undefined;
-  AppForm: undefined;
   ApplicationsHome: undefined;
+  NewApplication: undefined;
   SettingsHome: undefined;
   CalendarHome: undefined;
   NewEvent: undefined;
@@ -105,7 +105,7 @@ function ApplicationsStack() {
   return(
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ApplicationsHome" component={Applications} />
-      <Stack.Screen name="AppForm" component={AppForm}/>
+      <Stack.Screen name="NewApplication" component={NewApplication}/>
     </Stack.Navigator>
   );
 }

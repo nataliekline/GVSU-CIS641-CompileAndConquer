@@ -1,9 +1,8 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-
 import { AccountContext } from "@/context/AccountContext";
 import { LinearGradient } from 'expo-linear-gradient';
 import logoStyles from '../../styles/logo';
-import { useContext, useEffect } from "react";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useContext } from "react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 
 const Dashboard = () => {
@@ -45,7 +44,6 @@ const Dashboard = () => {
                 <Text style={styles.regularPaddingText}>Great work!</Text>
                 <Text style={styles.overallText}>Overall</Text>
 
-                {/* Metric Circles */}
                 <View style={styles.container}>
                     <View style={styles.leftCircle}>
                         <LinearGradient

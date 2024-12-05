@@ -6,9 +6,8 @@ import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Alert, ScrollView} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { Button, TextInput } from "react-native-paper";
-
+  
 const STATUS_OPTIONS = [
-    { label: 'Opportunities', value: 'Opportunities' },
     { label: 'Applied', value: 'Applied' },
     { label: 'Action Required', value: 'Action Required' },
     { label: 'Waiting for Response', value: 'Waiting for Response' },
@@ -32,38 +31,37 @@ const SALARY_OPTIONS = [
 
 const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation, route }) => {
     const accountContext = useContext(AccountContext);
-    const [applicationId, setApplicationId] = useState("");
-    const [isFocus, setIsFocus] = useState(false);
-
-    const initialNewApplication: Application = {
+    const card = route.params?.card || {
         position: "",
         companyName: "",
         status: "",
         dateSubmitted: new Date().toISOString().split('T')[0],
     };
 
-    const [newApplication, setNewApplication] = useState<Application>(initialNewApplication);
+    const [applicationData, setApplicationData] = useState(card);
+    const [isFocus, setIsFocus] = useState(false);
 
-    useEffect(() => {
-        if (route.params?.applicationId) {
-            setApplicationId(route.params.applicationId);
-            getApplication(accountContext.account.email, route.params?.applicationId, (data) => {
-                if (data) {
-                    setNewApplication(data);
-                }
+    const handleChange = (field: keyof Application, value: string) => {
+        setApplicationData((prev: Application) => ({ ...prev, [field]: value }));
+    }
+
+    function handleSave() {
+        console.log(applicationData);
+        if (applicationData.id) {
+            updateApplication (accountContext.account.email, applicationData.id, applicationData, () => {
+                console.log("Application updated successfully")
+                navigation.goBack();
+            })
+        } else {
+            createNewApplication(accountContext.account.email, applicationData, (responseMessage) => {
+                console.log("Application created succesfully")
+                navigation.goBack();
             });
-        } 
-    }, [route.params?.applicationId] );
-
-    const updateApplicationObject = (vals: any) => {
-        setNewApplication({
-            ...newApplication,
-            ...vals,
-        });
-    };
+        }
+    }
 
     const handleDelete = () => {
-        console.log(newApplication);
+        console.log(applicationData);
         Alert.alert(
             "Confirm",
             "Are you sure you want to delete this application?",
@@ -71,7 +69,7 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
               {
                 text: "Yes",
                 onPress: () => {
-                    deleteApplication(accountContext.account.email, applicationId, () => {
+                    deleteApplication(accountContext.account.email, applicationData.id, () => {
                         console.log("Application deleted Successfully");
                         navigation.goBack();
                     });
@@ -84,20 +82,15 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
         );
     }
 
-    function handleSave() {
-        console.log(newApplication);
-        if (applicationId != "") {
-            updateApplication (accountContext.account.email, applicationId, newApplication, () => {
-                console.log("Application updated successfully")
-                navigation.goBack();
-            })
-        } else {
-            createNewApplication(accountContext.account.email, newApplication, (responseMessage) => {
-                console.log("Application created succesfully")
-                navigation.goBack();
+    useEffect(() => {
+        if (route.params?.id) {
+            getApplication(accountContext.account.email, route.params.id, (data) => {
+                if (data) {
+                    setApplicationData(data);
+                }
             });
         }
-    }
+    }, [route.params?.id]);
 
     return (
         <AppGradient>
@@ -109,8 +102,8 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                         label="Position"
                         autoCapitalize='none'
-                        value= {newApplication.position}
-                        onChangeText={(val) => updateApplicationObject({ position: val })}
+                        value= {applicationData.position}
+                        onChangeText={(text) => handleChange('position', text)}
                         style={styles.input}
                     />
                     <TextInput
@@ -118,8 +111,8 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                         label="Company"
                         autoCapitalize='none'
-                        value= {newApplication.companyName}
-                        onChangeText={(val) => updateApplicationObject({ companyName: val })}
+                        value= {applicationData.companyName}
+                        onChangeText={(text) => handleChange('companyName', text)}
                         style={styles.input}
                     />
                     <TextInput
@@ -127,8 +120,8 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                         label="Date Submitted"
                         autoCapitalize='none'
-                        value= {newApplication.dateSubmitted}
-                        onChangeText={(val) => updateApplicationObject({ dateSubmitted: val })}
+                        value= {applicationData.dateSubmitted}
+                        onChangeText={(text) => handleChange('dateSubmitted', text)}
                         style={{marginBottom: 20}}
                     />
                     <Dropdown
@@ -141,14 +134,11 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Select Status' : '...'}
-                        value={newApplication.status}
+                        value={applicationData.status}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            setNewApplication(prev => ({
-                                ...prev,
-                                status: item.value,
-                            }));
+                            handleChange('status', item.value)
                             setIsFocus(false);
                         }}
                     />
@@ -162,14 +152,11 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Select Format' : '...'}
-                        value={newApplication.format}
+                        value={applicationData.format}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            setNewApplication(prev => ({
-                                ...prev,
-                                format: item.value,
-                            }));
+                            handleChange('format', item.value)
                             setIsFocus(false);
                         }}
                     />
@@ -183,14 +170,11 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Select Salary' : '...'}
-                        value={newApplication.salary}
+                        value={applicationData.salary}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            setNewApplication(prev => ({
-                                ...prev,
-                                salary: item.value,
-                            }));
+                            handleChange('salary', item.value)
                             setIsFocus(false);
                         }}
                     />
@@ -199,8 +183,8 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                         label="Location"
                         autoCapitalize='none'
-                        value= {newApplication.location}
-                        onChangeText={(val) => updateApplicationObject({ location: val })}
+                        value= {applicationData.location}
+                        onChangeText={(text) => handleChange('location', text)}
                         style={styles.input}
                     />
                     <TextInput
@@ -208,15 +192,15 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                         theme={{ colors: { primary: '#808080', text: '#D4D4D4', placeholder: '#D4D4D4' } }}
                         label="Link"
                         autoCapitalize='none'
-                        value= {newApplication.link}
-                        onChangeText={(val) => updateApplicationObject({ link: val })}
+                        value= {applicationData.link}
+                        onChangeText={(text) => handleChange('link', text)}
                         style={styles.input}
                     />
                     <View style= {{ flexDirection: 'row', justifyContent: 'space-evenly'}}>
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity onPress={handleSave}>
                                     <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
-                                        Save
+                                        {applicationData.id ? 'Update' : 'Create'}
                                     </Button>
                                 </TouchableOpacity>
                             </View>
@@ -227,7 +211,7 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                                     </Button>
                                 </TouchableOpacity>
                             </View>
-                            {applicationId != "" ? (
+                            {applicationData.id && (
                                 <View style={styles.buttonContainer}>
                                     <TouchableOpacity onPress={handleDelete}>
                                         <Button mode='contained' style={styles.button} labelStyle={styles.buttonLabel}>
@@ -235,8 +219,8 @@ const NewApplication: React.FC<{ navigation: any, route: any }> = ({ navigation,
                                         </Button>
                                     </TouchableOpacity>
                                 </View>
-                            ): (<></>)}
-                        </View>
+                            )}
+                    </View>
                 </View>
             </ScrollView>
         </AppGradient>
@@ -259,7 +243,8 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         paddingVertical: 8,
-        alignItems: 'center',  
+        paddingHorizontal: 16,
+        alignItems: 'center', 
     },
     button: {
         backgroundColor: '#4D3E3E',

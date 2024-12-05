@@ -10,63 +10,17 @@ import { useApplicationContext } from "@/context/ApplicationContext";
 
 const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
     const accountContext = useContext(AccountContext); 
-    const { setTotalApplications } = useApplicationContext();
-    const [applicationsData, setApplicationsData] = useState<ApplicationData[]>([]);
-
-    const backlogCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
-    const appliedCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
-    const actionCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
-    const waitingCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
-    const offerCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];
-    const rejectedCards: { applicationId: string; title: string; company: string; onPress: (id: string) => void }[] = [];    
-
-    const handlePressApplication = (applicationId: string) => {
-        navigation.navigate('NewApplication', { applicationId: applicationId });
-    }
+    const { appliedCards, actionCards, waitingCards, offerCards, rejectedCards, setCards } = useApplicationContext();  
 
     useEffect(() => {
         const unsubscribe = setupListenerOverApplications(
             accountContext.account.email,
             (response: ApplicationData[]) => {
-                setApplicationsData(response);
+                setCards(response);
             }
         );
         return () => unsubscribe();
-    }, []);
-
-    applicationsData.forEach((application) => {
-        const card = { 
-            applicationId: application.id, 
-            title: application.position, 
-            company: application.companyName,
-            onPress: handlePressApplication,
-        };
-    
-        if (application.status === "Opportunities") {
-            backlogCards.push(card);
-        } else if (application.status === "Applied") {
-            appliedCards.push(card);
-        } else if (application.status === "Action Required") {
-            actionCards.push(card);
-        } else if (application.status === "Waiting for Response") {
-            waitingCards.push(card);
-        } else if (application.status === "Offer Received") {
-            offerCards.push(card);
-        } else if (application.status === "Rejected") {
-            rejectedCards.push(card);
-        }
-    });
-
-    useEffect(() => {
-        const totalApplications = backlogCards.length 
-            + appliedCards.length 
-            + actionCards.length 
-            + waitingCards.length 
-            + offerCards.length 
-            + rejectedCards.length;
-
-        setTotalApplications(totalApplications);
-    }, [backlogCards, appliedCards, actionCards, waitingCards, offerCards, rejectedCards]);
+    }, [accountContext.account.email]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -86,7 +40,6 @@ const Applications: React.FC<{ navigation: any }> = ({navigation}) => {
                 </View>
             </View>
             <ScrollView horizontal contentContainerStyle={styles.kanbanContainer}>
-                <KanbanColumn title="Opportunities" cards={backlogCards} navigation={navigation} />
                 <KanbanColumn title="Applied" cards={appliedCards} navigation={navigation} />
                 <KanbanColumn title="Action Required" cards={actionCards} navigation={navigation}/>
                 <KanbanColumn title="Waiting for Response" cards={waitingCards} navigation={navigation}/>

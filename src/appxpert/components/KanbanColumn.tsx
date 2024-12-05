@@ -6,17 +6,17 @@ import Card from './Card';
 interface KanbanColumnProps {
   title: string;
   cards: { 
-    applicationId: string, 
-    title: string; 
-    company: string, 
-    onPress: (applicationId: string) => void 
+    applicationId: string; 
+    companyName: string;
+    position: string; 
+    onPress: (applicationId: string) => void;
   }[];
   navigation: any;
 }
 
 const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, cards, navigation }) => {
-  const handlePressApplication = (applicationId: string) => {
-    navigation.navigate('NewApplication', { applicationId });
+  const handlePressApplication = (applicationId: string, card: any) => {
+    navigation.navigate('NewApplication', { applicationId, card });
   }
 
   return (
@@ -26,15 +26,17 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, cards, navigation })
     >
       <Text style={styles.kanbanViewTitle}>{title}</Text>
       <ScrollView>
-        {cards.map((card, index) => (
-          <Card 
+      {cards.map((card, index) => {
+    return (
+        <Card 
             key={index} 
             applicationId={card.applicationId}
-            title={card.title} 
-            company={card.company}
-            onPress={handlePressApplication}
-          />
-        ))}
+            title={card.position} 
+            company={card.companyName}
+            onPress={() => handlePressApplication(card.applicationId, card)}
+        />
+    );
+})}
       </ScrollView>
     </LinearGradient>
   )

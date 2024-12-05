@@ -2,12 +2,27 @@ import { AccountContext } from "@/context/AccountContext";
 import { LinearGradient } from 'expo-linear-gradient';
 import logoStyles from '../../styles/logo';
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useApplicationContext } from "@/context/ApplicationContext";
 
 const Dashboard = () => {
     const accountContext = useContext(AccountContext);
-    const { totalApplications } = useApplicationContext();
+    const { appliedCards, actionCards, waitingCards, offerCards, rejectedCards, countApplicationsSubmittedThisWeek, totalApplications } = useApplicationContext();
+
+    const [applicationsThisWeek, setApplicationsThisWeek] = useState(0);
+
+    const successRate = (actionCards.length + waitingCards.length + offerCards.length) === 0 
+    ? 0 : Math.round(((actionCards.length + waitingCards.length + offerCards.length) / totalApplications) * 100);
+
+    const inReviewRate = appliedCards.length === 0 
+    ? 0 : Math.round((appliedCards.length / totalApplications) * 100);
+
+    const rejectedRate = rejectedCards.length === 0 
+    ? 0 : Math.round((rejectedCards.length / totalApplications) * 100);
+
+    useEffect(() => {
+        setApplicationsThisWeek(countApplicationsSubmittedThisWeek());
+    }, [appliedCards, actionCards, waitingCards, offerCards, rejectedCards]);
 
     return (
         <SafeAreaView>
@@ -25,9 +40,9 @@ const Dashboard = () => {
                             colors={['#7AC2FDA3', '#497497A3']}
                             style={styles.circleGradient}
                         >
-                            <Text style={styles.circleText}>3</Text>
+                            <Text style={styles.circleText}>{applicationsThisWeek}</Text>
                         </LinearGradient>
-                        <Text style={styles.regularPaddingText}>{" applications"}</Text>
+                        <Text style={styles.regularPaddingText}>{applicationsThisWeek === 1 ? " application" : " applications"}</Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.regularPaddingText}>{"and had "}</Text>
@@ -35,7 +50,7 @@ const Dashboard = () => {
                             colors={['#7AC2FDA3', '#497497A3']}
                             style={styles.circleGradient}
                         >
-                            <Text style={styles.circleText}>5</Text>
+                            <Text style={styles.circleText}>0</Text>
                         </LinearGradient>
                         <Text style={styles.regularPaddingText}>{" company-related events."}</Text>
                     </View>
@@ -51,7 +66,7 @@ const Dashboard = () => {
                         style={styles.bigCircles}
                         >
                         <Text style={styles.bubbleText}>In Review</Text>
-                        <Text style={styles.text}>{45}%</Text>
+                        <Text style={styles.text}>{inReviewRate}%</Text>
                         </LinearGradient>
                     </View>
                     <View style={styles.middleCircle}>
@@ -60,7 +75,7 @@ const Dashboard = () => {
                         style={styles.bigCircles}
                         >
                         <Text style={styles.bubbleText}>Success Rate</Text>
-                        <Text style={styles.successText}>{5}%</Text>
+                        <Text style={styles.successText}>{successRate}%</Text>
                         </LinearGradient>
                     </View>
                     <View style={styles.rightCircle}>
@@ -69,7 +84,7 @@ const Dashboard = () => {
                         style={styles.bigCircles}
                         >
                         <Text style={styles.bubbleText}>Rejected</Text>
-                        <Text style={styles.text}>{50}%</Text>
+                        <Text style={styles.text}>{rejectedRate}%</Text>
                         </LinearGradient>
                     </View>
                 </View>
@@ -77,7 +92,7 @@ const Dashboard = () => {
                 <View style={styles.footerContainer}>
                     <View style={styles.textRow}>
                         <Text style={styles.boldText}>Average Time of Response: </Text>
-                        <Text style={styles.regularText}>20 days</Text>
+                        <Text style={styles.regularText}>Unknown</Text>
                     </View>
                     <View style={styles.textRow}>
                         <Text style={styles.boldText}>Total Applications Submitted: </Text>

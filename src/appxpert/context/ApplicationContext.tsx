@@ -8,6 +8,7 @@ type ApplicationContextType = {
     rejectedCards: any[];
     totalApplications: number;
     setCards: (cards: any[]) => void;
+    countApplicationsSubmittedThisWeek: () => number;
 };
 
 const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
@@ -47,6 +48,35 @@ export const ApplicationProvider: React.FC<{ children: ReactNode }> = ({ childre
         });
     };
 
+    const isThisWeek = (date: string): boolean => {
+        const currentDate = new Date();
+    
+        const currentDay = currentDate.getDay();
+        const startOfWeek = new Date(currentDate);
+        startOfWeek.setDate(currentDate.getDate() - currentDay);
+    
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+    
+        const submittedDate = new Date(date);
+    
+        return submittedDate >= startOfWeek && submittedDate <= endOfWeek;
+    };
+
+    const countApplicationsSubmittedThisWeek = () => {
+        const allCards = [
+            ...appliedCards,
+            ...actionCards,
+            ...waitingCards,
+            ...offerCards,
+            ...rejectedCards
+        ];
+    
+        const submittedThisWeek = allCards.filter((card) => isThisWeek(card.dateSubmitted));
+    
+        return submittedThisWeek.length;
+    };
+
     return (
         <ApplicationContext.Provider value={{
             appliedCards,
@@ -56,6 +86,7 @@ export const ApplicationProvider: React.FC<{ children: ReactNode }> = ({ childre
             rejectedCards,
             totalApplications,
             setCards,
+            countApplicationsSubmittedThisWeek,
         }}>
             {children}
         </ApplicationContext.Provider>

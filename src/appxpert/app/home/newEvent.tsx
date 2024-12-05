@@ -9,6 +9,7 @@ import AppGradient from '@/components/AppGradient';
 import { Dropdown } from "react-native-element-dropdown";
 import { Event } from "@/models/Event";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { getApplicationsForPicker } from "@/persistence/ApplicationStore";
 
 const OPTIONS = [
     { label: 'Google', value: '1' },
@@ -35,6 +36,7 @@ const EVENT_TYPE_OPTIONS = [
 
 const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}) => {
     const accountContext = useContext(AccountContext);
+    const [companies, setCompanies] = useState<any[]>([]);
     const [companyValue, setCompanyValue] = useState<string>("");
     const [durationValue, setDurationValue] = useState<string>("");
     const [eventType, setEventType] = useState<string>("");
@@ -50,6 +52,12 @@ const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}
         duration: "30m",
     };
     const [newEvent, setNewEvent] = useState<Event>(initialNewEvent);
+
+    useEffect(() => {
+        getApplicationsForPicker(accountContext.account.email, (applications) => {
+            setCompanies(applications);
+        });
+    }, []);
 
     useEffect(() => {
         if (route.params?.eventId) {
@@ -192,7 +200,7 @@ const NewEvent: React.FC<{ navigation: any, route:any }> = ({ navigation, route}
                         selectedTextStyle={styles.selectedTextStyle}
                         inputSearchStyle={styles.inputSearchStyle}
                         iconStyle={styles.iconStyle}
-                        data={OPTIONS}
+                        data={companies}
                         search
                         maxHeight={300}
                         labelField="label"

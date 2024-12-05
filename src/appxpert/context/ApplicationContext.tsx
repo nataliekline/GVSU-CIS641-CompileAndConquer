@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { ReactNode, createContext, useContext, useState } from 'react';
 
 type ApplicationContextType = {
     appliedCards: any[];
@@ -11,7 +11,7 @@ type ApplicationContextType = {
     countApplicationsSubmittedThisWeek: () => number;
 };
 
-const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
+export const ApplicationContext = createContext<ApplicationContextType | undefined>(undefined);
 
 export const ApplicationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [appliedCards, setAppliedCards] = useState<any[]>([]);

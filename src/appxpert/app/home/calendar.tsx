@@ -1,7 +1,8 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 
 import { AccountContext } from "@/context/AccountContext";
+import { ApplicationContext } from "@/context/ApplicationContext";
 import { EventData } from "@/models/Event";
 import { Ionicons } from "@expo/vector-icons";
 import { Calendar as ReactNativeCalendar } from "react-native-calendars";
@@ -10,6 +11,7 @@ import {setupListenerOverEvents} from "@/persistence/EventStore";
 
 const Calendar : React.FC<{ navigation: any }> = ({ navigation }) => {
     const accountContext = useContext(AccountContext); 
+    const applicationContext = useContext(ApplicationContext);
     const [selectedDate, setSelectedDate] = useState<string>("");
     const [events, setEvents] = useState<EventData[]>([]);
     const [eventsData, setEventsData] = useState<Record<string, EventData[]>>({});
@@ -20,6 +22,16 @@ const Calendar : React.FC<{ navigation: any }> = ({ navigation }) => {
 
     const handlePressEvent = (eventId: string) => {
         navigation.navigate('NewEvent', { eventId: eventId });
+    }
+
+    const handlePressNewEvent = () => {
+      if (applicationContext && applicationContext?.totalApplications > 0) {
+        navigation.navigate('NewEvent');
+      } else {
+        Alert.alert('No Applications Found', 'Please create applications before registering events', [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+      }
     }
 
     useEffect(() => {
@@ -38,7 +50,7 @@ const Calendar : React.FC<{ navigation: any }> = ({ navigation }) => {
             <View style={styles.introContainer}>
               <Text style={styles.applicationsText}>Events</Text>
               <View style={styles.actionsContainer}>
-                  <TouchableOpacity onPress={() => navigation.navigate('NewEvent')}>
+                  <TouchableOpacity onPress={() => handlePressNewEvent()}>
                       <Ionicons name={'add-outline'} size={20}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => {console.log('Future work')}}>

@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { Account } from "@/models/Account";
 import AppGradient from '@/components/AppGradient';
+import { ApplicationContext } from "@/context/ApplicationContext";
 import IconButton from "@/components/IconWithButton";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RootStackParamList } from "../app";
@@ -15,7 +16,8 @@ import logoStyles from '../../styles/logo';
 
 type SettingsScreenProps = StackScreenProps<RootStackParamList, 'SettingsHome'>;
 const Settings: React.FC<SettingsScreenProps> = ({navigation}) => {
-    const accountContext = useContext(AccountContext); 
+    const accountContext = useContext(AccountContext);
+    const applicationContext = useContext(ApplicationContext)
     const [name, setName] = useState(accountContext.account.name);
 
     useEffect(() => {
@@ -72,6 +74,9 @@ const Settings: React.FC<SettingsScreenProps> = ({navigation}) => {
     function onLogOut() {
         signOut(auth).then(() => {
             accountContext.setAccountState(initialAccountState);
+            if (applicationContext) {
+                applicationContext?.setCards([]);
+            }
             console.log("Log out success");
             // Sign-out successful.
           }).catch((error) => {

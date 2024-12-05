@@ -1,8 +1,8 @@
-import { DocumentData, addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore"
-
-import { db } from '../config/fb-config'
-import { ACCOUNT_PATH } from "./AccountStore";
 import { Application, ApplicationData } from "@/models/Application";
+import { DocumentData, QuerySnapshot, addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore"
+
+import { ACCOUNT_PATH } from "./AccountStore";
+import { db } from '../config/fb-config'
 
 const APPLICATIONS_PATH = "applications";
 
@@ -80,4 +80,21 @@ export function setupListenerOverApplications(email: string, callback: (response
     );
 
     return unsubscribe;
+}
+
+export function getApplicationsForPicker(email:string, callback: (response: any[]) => void) {
+    const accountRef = doc(db, ACCOUNT_PATH, email);
+    const applicationsRef = collection(accountRef, APPLICATIONS_PATH);
+
+    getDocs(applicationsRef)
+    .then((querySnapshot) => {
+        const applications: any[] = [];
+        querySnapshot.forEach((doc: any) => {
+            const application = doc.data() as Application; 
+            applications.push({label: application.companyName, value: doc.id})
+        });
+        callback(applications)
+    }).catch((error) => {
+        console.error("Could not get applications ", error);
+    })
 }

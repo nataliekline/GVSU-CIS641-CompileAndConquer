@@ -1,11 +1,10 @@
 # Overview
 
-<Describe the purpose of this document in 1 paragraph of less … hint: it is
-your SRS>
+This document defines the scope of AppXpert by outlining its functional and non-functional requirements, detailing what the application must accomplish and how it will operate. Serving as a Software Requirements Specification (SRS), it provides a clear framework for dividing the development process into manageable tasks, specifying the criteria the final product must meet, and defining the expected interactions between users and the system.
 
 # Software Requirements
 
-<Describe the structure of this section>
+This section describes the functional and non-functional requirements for the project. 
 
 ## Functional Requirements
 
@@ -38,13 +37,17 @@ your SRS>
 | NFR3 | < Non-Functional Requirement 3> |
 | … | … | … |
 
-# Change management plan
+# Change Management Plan
 
-<Description of what this section is>
+AppXpert is designed to be user-friendly and intuitive, allowing engineers to quickly familiarize themselves with its functionalities by exploring the tabs and practicing basic operations such as creating, reading, updating, and deleting applications and events. Currently, the app is accessible by cloning our GitHub repository and running it on an iOS or Android simulator, with a consistent interface across both platforms. While most users should find the app straightforward to navigate, step-by-step video tutorials are available upon request to demonstrate core features and help users make the most of the app's capabilities with minimal effort.
+
+To ensure seamless integration into an organization's ecosystem, engineers should first verify compatibility with their development environment, including resolving any conflicting dependencies and ensuring access to iOS and Android simulators. AppXpert is built to complement existing workflows, with the potential for future enhancements such as integrations with external tools like calendar systems or email platforms to automate application status tracking. Testing the app in a controlled environment will help engineers confirm compatibility and integrate it smoothly without disruptions.
+
+Finally, the AppXpert repository will remain public, allowing engineers to report discovered bugs or suggest enhancements directly as GitHub issues. Our team will regularly review these submissions, prioritizing critical issues and continuously releasing updates to enhance functionality and improve the overall user experience. By maintaining an open and collaborative development process, we aim to ensure AppXpert remains reliable and valuable for its users.
 
 # Traceability links
 
-<Description of this section>
+This section outlines the relationships between the system requirements and the corresponding artifacts, such as use case diagrams, class diagrams, and activity diagrams.
 
 ## Use Case Diagram Traceability
 
@@ -74,6 +77,8 @@ your SRS>
 
 # Software Artifacts
 
-<Describe the purpose of this section>
+This section holds the direct links to the artifacts referenced in the traceability section. 
 
-* [I am a link](to_some_file.pdf)
+| Artifact ID | Link |
+| :-------------: | :----------: |
+| 1 | [something](linktoartifact)

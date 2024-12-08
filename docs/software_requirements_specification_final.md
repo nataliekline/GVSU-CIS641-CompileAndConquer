@@ -116,6 +116,7 @@ This section describes the functional and non-functional requirements for the pr
 | NFR8 | The app shall support devices running Android 10 or higher. |
 | NFR9 | The app shall automatically adapt to various phone screen sizes. |
 | NFR10 | The app shall function seamlessly in light mode on supported devices. |
+| NFR11 | The app shall not support tablet devices. |
 
 ### Authentication
 

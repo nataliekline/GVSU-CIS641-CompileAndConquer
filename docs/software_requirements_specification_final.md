@@ -8,32 +8,148 @@ This section describes the functional and non-functional requirements for the pr
 
 ## Functional Requirements
 
-### <Name of Feature 1> 
+### Login Screen 
 
 | ID  | Requirement |
 | :-------------: | :----------: |
-| FR1 | <Requirement 1> |
-| FR2 | <Requirement 2> |
-| FR3 | <Requirement 3> |
-| … | … | … |
+| FR1 | The user shall be able to log in using their email and password specified during account registration. |
+| FR2 | The app shall navigate to the sign-up screen when "Create new account" is pressed. |
+| FR3 | The user shall receive an alert if their login credentials are incorrect when "Login" is pressed. |
+| FR4 | The app shall navigate to the dashboard screen if their login credentials are correct when "Login" is pressed. |
+| FR5 | The app shall show an error if "Login" is pressed and the email address or password field is empty. |
 
-### <Name of Feature 2>
+### Sign Up Screen 
 
 | ID  | Requirement |
 | :-------------: | :----------: |
-| FR4 | <Requirement 1> |
-| FR5 | <Requirement 2> |
-| FR6 | <Requirement 3> |
-| … | … |
+| FR6 | The user shall be able to create an account by inputting their name, email, password, and confirmed password. |
+| FR7 | The app shall navigate to the login screen when "Back to Login" is pressed. |
+| FR8 | The user shall receive an alert if their sign-up credentials are invalid when "Sign Up" is pressed. |
+| FR9 | The app shall navigate to the Dashboard screen if their sign-up credentials are valid when "Sign Up" is pressed. |
+| FR10 | The app shall show an error if "Sign Up" is pressed and one or more fields are empty. |
+| FR11 | The app shall show an error if the password and confirmed password fields do not match. |
+| FR12 | The user's password shall be a minimum of 6 characters.
+
+### Dashboard 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| FR13 | The dashboard screen shall greet the user by their name as entered during registration. |
+| FR14 | The dashboard screen shall display the number of applications that were entered into the app during the current week. |
+| FR15 | The dashboard screen shall display the total number of applications that have been entered into the app regardless of their status. |
+| FR16 | The dashboard screen shall display the user's success rate, calculated as the percentage of applications that are in the "Action Required", "waiting for Response", or "Offer Received" statuses. |
+| FR17 | The dashboard screen shall display the user's in review rate, calculated as the percentage of applications that are in the "Applied" status. |
+| FR18 | The dashboard screen shall display the user's rejection rate, calculated as the percentage of applications that are in the "Rejected" status. |
+| FR19 | The dashboard screen shall include a visual representation such as bubbles of application statuses for easy understanding. |
+
+### Applications
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| FR20 | The app shall display a form to enter application details when the user clicks on the plus icon. |
+| FR21 | The app shall show 5 columns on the applications screen, each representing a different application status title. |
+| FR22 | The application card shall move to the correct column automatically when the user edits the status. |
+| FR23 | Each application card shall display the position title and company name associated with the application ID. | 
+| FR24 | The columns on the applications screen shall be horizontally scrollable. |
+| FR25 | The cards within each column shall be vertically scrollable. |
+| FR26 | The "Date Submitted" field on the form shall be prepopulated with today's date when the user clicks the plus icon. |
+| FR27 | The "Application Status" field on the form shall be a dropdown with 5 predefined options. |
+| FR28 | The "Format" field on the form shall be a dropdown with 3 predefined options. |
+| FR29 | The "Salary" field on the form shall be a dropdown with 5 predefined ranges. |
+| FR30 | The user shall be able to navigate back to the main applications screen by pressing the "Back" button when on the form. |
+| FR31 | A new application card shall appear in the correct column upon clicking "Create" on the application form. |
+| FR32 | The user shall be able to delete an application by selecting the card and clicking the "Delete" button. |
+| FR33 | The user shall be able to edit all application details by selecting an existing application card and opening the form. |
+
+### Calendar 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| FR34 | The app shall display a form for entering event details when the user clicks on the plus icon. |
+| FR35 | The app shall highlight today's current date on the calendar with a blue dot. |
+| FR36 | The app shall list all events that have been entered by the user for the selected day. |
+| FR37 | The app shall display a messay saying "No events for this day" if no events have been submitted for the selected date. |
+| FR38 | The user shall be able to interact with the calendar to view months in the past and future. |
+| FR39 | Each event card shall display the event type, company name, and time of the event associated with the event ID. |
+| FR40 | The event cards shall be vertically scrollable to allow viewing all events for the selected day. |
+| FR41 | The "Event Type" field on the event form shall be a dropdown with 2 predefined options. |
+| FR42 | The "Application" field on the event form shall be a dropdown containing the company names from all submitted applications. |
+| FR43 | The "Duration" field on the event form shall be a dropdown containing 6 predefined durations. |
+| FR44 | The user shall be able to specify both the date and time for the event on the form. |
+| FR45 | The user shall be able to navigate back to the main calendar screen by pressing the "Back" button on the form. |
+| FR46 | A new event card shall appear on the Calendar screen upon clicking "Create" on the event form and selecting the correct date. |
+| FR47 | The user shall be able to delete an event by selecting the card and clicking the "Delete" button. |
+| FR48 | The user shall be able to edit all event details by selecting an existing event card, opening the form, and clicking "Save". |
+
+### Settings 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| FR49 | The app shall display the user's name on the settings screen. |
+| FR50 | The app shall display 4 options on the settings screen: Personal Information, Notifications, Logout, and Delete Account. |
+| FR51 | All of the user's data shall be permanently deleted from the database when the user clicks "Delete Account" and confirms the action. |
+| FR52 | The user shall navigate to the Personal Information screen when "Personal Information" is pressed. |
+| FR53 | The user shall be able to add or update their age and profession on the Personal Information screen. |
+| FR54 | The user shall be able to edit the name associated with their account on the Personal Information screen. |
+| FR55 | The user shall navigate back to the Settings screen when "Back" is clicked, discarding any changes they may have entered. |
+| FR56 | The user shall be logged out of their account and navigated to the login screen when "Logout" is pressed.  |
+| FR57 | The app shall display a confirmation dialog when the user presses "Delete Account" to prevent accidental account deletion. |
 
 ## Non-Functional Requirements
 
-### <Name of Feature 1> 
+### Security 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| NFR1 | The user's data shall not be shared with other users.  |
+| NFR2 | The user's data shall be stored securely with Firestore Database. |
+| NFR3 | < Non-Functional Requirement 3> |
+| … | … | … |
+
+### Platform Compatibility 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| NFR1 | The app shall be able to run on iOS operating systems. |
+| NFR2 | The app shall be able to run on Android operating systems. |
+| … | … | … |
+
+### Authentication
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| NFR3 | The password field shall have masked sensitive format to hide the password while typing on the Login screen. |
+| NFR4 | The password and confirm password fields shall have masked sensitive format to hide the password while typing on the Signup screen. |
+| NFR4 | The app shall validate the user's credentials within 2 seconds to log them in. |
+| NFR4 | The app shall take no more than 3 seconds to connect to Firebase to create a user's account. |
+| NFR5 | The app shall log out the user when the user clears the app from their background. |
+| NFR6 | The app shall maintain session validity for a minimum of 2 hours unless the user logs out. |
+| NFR7 | The app shall prevent duplicate account creation by verifying that the meial is unique before submission. |
+
+### Database Management 
 
 | ID  | Requirement |
 | :-------------: | :----------: |
 | NFR1 | <Non-Functional Requirement 1> |
 | NFR2 | < Non-Functional Requirement 2> |
+| NFR3 | < Non-Functional Requirement 3> |
+| … | … | … |
+
+### Calendar Software 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| NFR1 | The app shall use the React Native Calendar library. |
+| NFR2 | < Non-Functional Requirement 2> |
+| NFR3 | < Non-Functional Requirement 3> |
+| … | … | … |
+
+### Performance 
+
+| ID  | Requirement |
+| :-------------: | :----------: |
+| NFR1 | The app shall be able to handle up to 100 applications without performance deterioriation, maintaining a response time of no more than two seconds for all actions. |
+| NFR2 | The splash screen shall be visible no more than two seconds upon launching the app. |
 | NFR3 | < Non-Functional Requirement 3> |
 | … | … | … |
 

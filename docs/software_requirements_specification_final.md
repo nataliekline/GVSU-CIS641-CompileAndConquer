@@ -68,7 +68,7 @@ This section describes the functional and non-functional requirements for the pr
 | FR34 | The app shall display a form for entering event details when the user clicks on the plus icon. |
 | FR35 | The app shall highlight today's current date on the calendar with a blue dot. |
 | FR36 | The app shall list all events that have been entered by the user for the selected day. |
-| FR37 | The app shall display a messay saying "No events for this day" if no events have been submitted for the selected date. |
+| FR37 | The app shall display a message saying "No events for this day" if no events have been submitted for the selected date. |
 | FR38 | The user shall be able to interact with the calendar to view months in the past and future. |
 | FR39 | Each event card shall display the event type, company name, and time of the event associated with the event ID. |
 | FR40 | The event cards shall be vertically scrollable to allow viewing all events for the selected day. |
@@ -103,55 +103,53 @@ This section describes the functional and non-functional requirements for the pr
 | :-------------: | :----------: |
 | NFR1 | The user's data shall not be shared with other users.  |
 | NFR2 | The user's data shall be stored securely with Firestore Database. |
-| NFR3 | < Non-Functional Requirement 3> |
-| … | … | … |
+| NFR3 | The app shall encrypt sensitive user data, including passwords. |
+| NFR4 | Password resets shall only be initiated through a secure link sent to the user's registered email address. |
+| NFR5 | Users shall not have the ability to change the email address associated with their account to ensure data integrity. |
 
 ### Platform Compatibility 
 
 | ID  | Requirement |
 | :-------------: | :----------: |
-| NFR1 | The app shall be able to run on iOS operating systems. |
-| NFR2 | The app shall be able to run on Android operating systems. |
-| … | … | … |
+| NFR6 | The app shall maintain a consistent user interface across Android and iOS devices. |
+| NFR7 | The app shall support devices running iOS 14 or higher. |
+| NFR8 | The app shall support devices running Android 10 or higher. |
+| NFR9 | The app shall automatically adapt to various phone screen sizes. |
+| NFR10 | The app shall function seamlessly in light mode on supported devices. |
 
 ### Authentication
 
 | ID  | Requirement |
 | :-------------: | :----------: |
-| NFR3 | The password field shall have masked sensitive format to hide the password while typing on the Login screen. |
-| NFR4 | The password and confirm password fields shall have masked sensitive format to hide the password while typing on the Signup screen. |
-| NFR4 | The app shall validate the user's credentials within 2 seconds to log them in. |
-| NFR4 | The app shall take no more than 3 seconds to connect to Firebase to create a user's account. |
-| NFR5 | The app shall log out the user when the user clears the app from their background. |
-| NFR6 | The app shall maintain session validity for a minimum of 2 hours unless the user logs out. |
-| NFR7 | The app shall prevent duplicate account creation by verifying that the meial is unique before submission. |
-
-### Database Management 
-
-| ID  | Requirement |
-| :-------------: | :----------: |
-| NFR1 | <Non-Functional Requirement 1> |
-| NFR2 | < Non-Functional Requirement 2> |
-| NFR3 | < Non-Functional Requirement 3> |
-| … | … | … |
+| NFR12 | The password field shall have a masked sensitive format to hide the password while typing on the Login screen. |
+| NFR13 | The password and confirm password fields shall have a masked sensitive format to hide the password while typing on the Signup screen. |
+| NFR14 | The app shall validate the user's credentials within 2 seconds to log them in. |
+| NFR15 | The app shall take no more than 3 seconds to connect to Firebase to create a user's account. |
+| NFR16 | The app shall log out the user when the user clears the app from their background. |
+| NFR17 | The app shall maintain session validity for a minimum of 2 hours unless the user logs out. |
+| NFR18 | The app shall prevent duplicate account creation by verifying that the meial is unique before submission. |
 
 ### Calendar Software 
 
 | ID  | Requirement |
 | :-------------: | :----------: |
-| NFR1 | The app shall use the React Native Calendar library. |
-| NFR2 | < Non-Functional Requirement 2> |
-| NFR3 | < Non-Functional Requirement 3> |
-| … | … | … |
+| NFR19 | The app shall use an open-source calendar library compatible with both iOS and Android platforms. |
+| NFR20 | The calendar library shall include the option to select a time by scrolling in addition to the display of a calendar. |
+| NFR21 | The calendar shall refresh within 2 seconds after the user adds or edits an event. |
+| NFR22 | The calendar shall support localization for date sand times based on the user's device settings. |
+| NFR23 | The calendar shall allow the user to navigate between months and years smoothly without performance lag. |
 
 ### Performance 
 
 | ID  | Requirement |
 | :-------------: | :----------: |
-| NFR1 | The app shall be able to handle up to 100 applications without performance deterioriation, maintaining a response time of no more than two seconds for all actions. |
-| NFR2 | The splash screen shall be visible no more than two seconds upon launching the app. |
-| NFR3 | < Non-Functional Requirement 3> |
-| … | … | … |
+| NFR24 | The app shall be able to handle up to 100 applications per user without performance deterioration. |
+| NFR25 | The app shall handle up to 50 concurrent users without degradation in performance. |
+| NFR26 | The app shall ensure all transitions between screens are completed in under 1 second. |
+| NFR27 | The app shall perform its features without crashing, maintaining a 95% reliability rate. |
+| NFR28 | The splash screen shall be visible no more than two seconds upon launching the app. |
+| NFR29 | The app shall have a UI that is easy to understand and follow. |
+| NFR30 | The app shall maintain a smooth scrolling experience when displaying large lists of applications or events. |
 
 # Change Management Plan
 

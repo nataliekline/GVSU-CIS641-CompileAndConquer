@@ -200,3 +200,4 @@ This section holds the direct links to the artifacts referenced in the traceabil
 | 3 | [Use Case Diagram Event Information](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/Event%20Information%20Use%20Case%20Diagram.png) |
 | 4 | [Activity Diagram Account Registration](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/Account%20Registration%20Activity%20Diagram.png) |
 | 5 | [Activity Diagram Add Application](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/Add%20Application%20Activity%20Diagram.png) |
+| 6 | [Class Diagram](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/Class%20Diagram.png) |

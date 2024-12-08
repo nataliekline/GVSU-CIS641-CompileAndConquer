@@ -195,4 +195,5 @@ This section holds the direct links to the artifacts referenced in the traceabil
 
 | Artifact ID | Link |
 | :-------------: | :----------: |
-| 1 | [something](linktoartifact)
+| 1 | [Use Case Diagram User Account](linktoartifact) |
+| 2 | [Use Case Diagram Application Information]() |

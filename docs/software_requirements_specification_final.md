@@ -167,16 +167,31 @@ This section outlines the relationships between the system requirements and the 
 
 | Artifact ID  | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
-| UseCase1 | Move Player | FR5 |
-| … | … | … |
+| 1 | Register Account | FR2, 6, 7 // NFR1, 2, 5, 6-11, 15, 18, 26, 27 29, 30|
+| 1 | Validate Credentials | FR3, 4, 5, 8, 9, 10, 11, 12 // NFR2, 3, 4, 12-18|
+| 1 | Login/Logout of Account | FR1, 5, 50, 56 // NFR6-11, 15, 16, 17, 25, 26, 27 29, 30|
+| 1 | Update Account Details | FR49, 50, 52, 53, 54, 55 // NFR2, 5, 6-11, 26, 27, 29, 30|
+| 1 | View Account | FR49, 50, 52, 53, 54, 55 // NFR2, 5, 6-11, 26, 27, 29, 30|
+| 1 | Delete Account | FR49, 50, 51, 57 // NFR6-11, 27, 29, 30|
+| 2 | Add Application Details | FR20, 26, 27, 28, 29, 30, 31 // NFR 2, 6-11, 26, 27, 29, 30|
+| 2 | View Job Application |  FR21, 22, 23, 24, 25, 30, 31 // NFR2, 6-11, 24, 26, 27, 29, 30|
+| 2 | Update Application Information | FR33 // NFR2, 6-11, 26, 27, 29-30 |
+| 2 | Delete Application | FR32 // NFR2, 6-11, 26, 27, 29, 30 |
+| 3 | Add Event Details| FR34, 37, 41-46 // NFR2, 6-11, 19, 21, 26, 27, 29, 30|
+| 3 | Update Event Information| FR41-45, 48 // NFR2, 6-11, 19, 21, 26, 27, 29, 30|
+| 3 | View Event Details | FR35-40 // NFR2, 6-11, 19-23, 27, 29, 30|
+| 3 | Delete Event | FR47 // NFR2, 6-11, 19, 21, 26, 27, 29, 30|
 
 
 ## Class Diagram Traceability
 
-| Artifact Name | Requirement ID |
-| :-------------: |:----------: |
-| classPlayer | NFR3, FR5 |
-| … | … | … |
+| Artifact ID  | Artifact Name | Requirement ID |
+| :-------------: | :----------: | :----------: |
+| 6 | User | FR1-12, 50-57 // NFR1-18, 25-30 |
+| 6 | Event | FR34-46, 48 // NFR2, 6-11, 19-23, 26, 27, 29, 30|
+| 6 | Application |FR 20-33 // NFR2, 6-11, 24, 26, 27, 29, 30|
+| 6 | Interview | FR41 // NFR2, 6-11, 19-23, 26, 27, 29, 30|
+| 6 | Information Session | FR41 // NFR2, 6-11, 19-23, 26, 27, 29, 30|
 
 
 ## Activity Diagram Traceability
@@ -185,8 +200,8 @@ This section outlines the relationships between the system requirements and the 
 
 | Artifact ID  | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
-| <filename> | Handle Player Input | FR1-5, NFR2 |
-| … | … | … |
+| 4 | Account Registration | FR1-12 // NFR1-18, 25-30  |
+| 5 | Add Application | FR20, 26, 27, 28, 29, 30, 31 // NFR 2, 6-11, 26, 27, 29, 30 |
 
 
 # Software Artifacts

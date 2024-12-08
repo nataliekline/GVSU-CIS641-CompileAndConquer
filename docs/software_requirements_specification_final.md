@@ -196,8 +196,6 @@ This section outlines the relationships between the system requirements and the 
 
 ## Activity Diagram Traceability
 
-<In this case, it makes more sense (I think, feel free to disagree) to link to the file and to those requirements impacted>
-
 | Artifact ID  | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
 | 4 | Account Registration | FR1-12 // NFR1-18, 25-30  |

@@ -195,5 +195,6 @@ This section holds the direct links to the artifacts referenced in the traceabil
 
 | Artifact ID | Link |
 | :-------------: | :----------: |
-| 1 | [Use Case Diagram User Account](linktoartifact) |
-| 2 | [Use Case Diagram Application Information]() |
+| 1 | [Use Case Diagram User Account](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/User%20Account%20Use%20Case%20Diagram.png) |
+| 2 | [Use Case Diagram Application Information](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/Application%20Information%20Use%20Case%20Diagram.png) |
+| 3 | [Use Case Diagram Event Information](https://github.com/nataliekline/GVSU-CIS641-CompileAndConquer/blob/main/artifacts/traceabilityDiagrams/Event%20Information%20Use%20Case%20Diagram.png) |
